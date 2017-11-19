@@ -79,10 +79,9 @@ def shift(f):
     return f2
 
 
-def add(f1, f2):
-    f = deepcopy(f1)
-    f['blocks'] = []
-    for block1 in f1['blocks']:
+def add(f2):
+    f = {'blocks': []}
+    for block1 in phi_by_omega()['blocks']:
         for block2 in f2['blocks']:
             a = intersect(block1[0], block2[0])
             for s in a:
@@ -99,7 +98,7 @@ def generate_phi_m(PHI, m_max, p=3):
         if (m == 1):
             PHI[1] = phi_by_omega()
         if(m != 1):
-            PHI[m] = add(PHI[m-1], shift(PHI[m-1]))
+            PHI[m] = add(shift(PHI[m-1]))
 
 
 
