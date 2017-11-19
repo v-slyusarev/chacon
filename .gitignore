@@ -99,3 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# misc
+.idea/
+Articles/
+Untitled*
+Фк
