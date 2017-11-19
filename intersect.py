@@ -52,7 +52,7 @@ def intersect1(seq_with_z, usual_seq, z_index):
     # if we reach this point, we know that usual_seq matches the prefix and ends with zeros
 
     if(len(seq_before_z) == 0):  # usual_seq consists of zeros
-        return [seq_with_z]      # so (z)t belongs to its pattern
+        return [usual_seq + seq_with_z]      # so (z)t belongs to its set
     else:                        # otherwise...
         return [usual_seq + seq_after_z]
 
