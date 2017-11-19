@@ -42,7 +42,7 @@ def intersect1(seq_with_z, usual_seq, z_index):
 
     for j in range(z_index, len(usual_seq)):   # check suffixes
         if (usual_seq[j] != 0):                    # usual_seq does not end with zeros
-            if (usual_seq[z_index + j] == t):          # usual_seq ends terminator and some more
+            if (usual_seq[j] == t):          # usual_seq ends with correct terminator and some more
                 return [usual_seq]                     # which means in belongs to set represented by seq_with_z
             else:
                 return []                              # usual_seq does not have the terminator after zero
@@ -59,7 +59,8 @@ def intersect1(seq_with_z, usual_seq, z_index):
 
 def intersect2(s1, s2, k1, k2):
     if (k1 > k2):
-        s1, s2, k1, k2 = s2, s1, k2, s1
+        s1, s2 = s2, s1
+        k1, k2 = k2, k1
 
     n1 = len(s1)
     n2 = len(s2)
@@ -77,7 +78,7 @@ def intersect2(s1, s2, k1, k2):
 
     if (s1[k1 + 1] == s2[k2 + 1]):
         if (s1[: k1] + zeros == s2[: k2]):
-            a += [s1]
+            a += [s2]
 
     return a
 
