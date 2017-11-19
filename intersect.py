@@ -30,26 +30,31 @@ def intersect1(seq_with_z, usual_seq, z_index):
 
     s = simple_intersect(seq_before_z, usual_seq)
 
-    if (len(s) == 0):
+    if (len(s) == 0):  # this means that prefixes do not match => sequences do not intersect
         return []
 
-    if (len(usual_seq) <= z_index):
+    if (len(usual_seq) <= z_index):  # this means prefixes match but seq_with_z belongs to set represented by usual_seq
         return [seq_with_z]
 
     t = seq_after_z[0]
     k = 0
     res = []
 
-    for j in range(z_index, len(usual_seq)):
-        if (usual_seq[j] != 0):
-            if (usual_seq[z_index] == t):
-                return [usual_seq]
+    for j in range(z_index, len(usual_seq)):   # check suffixes
+        if (usual_seq[j] != 0):                    # usual_seq does not end with zeros
+            if (usual_seq[z_index + j] == t):          # usual_seq ends terminator and some more
+                return [usual_seq]                     # which means in belongs to set represented by seq_with_z
             else:
-                return []
-        else:
+                return []                              # usual_seq does not have the terminator after zero
+        else:                                          # which means intersection is empty
             pass
 
-    return [usual_seq + seq_after_z]
+    # if we reach this point, we know that usual_seq matches the prefix and ends with zeros
+
+    if(len(seq_before_z) == 0):  # usual_seq consists of zeros
+        return [seq_with_z]      # so (z)t belongs to its pattern
+    else:                        # otherwise...
+        return [usual_seq + seq_after_z]
 
 
 def intersect2(s1, s2, k1, k2):
