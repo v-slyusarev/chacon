@@ -4,6 +4,12 @@ def omega_0(x, p):
     else:
         return 0
 
-def square_omega(x, p):
-    assert(x < p)
-    return x*(p-x-2) if 0 <= x < p - 1 else 0
+
+def square_omega_1(x, p):
+    assert x < p
+    return x * (p - x - 1) if 0 <= x < p - 1 else 0
+
+
+def square_omega_2(x, p):
+    assert x < p
+    return x * (p - x) if 0 <= x < p - 1 else 0
