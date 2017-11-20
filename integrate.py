@@ -10,8 +10,14 @@ def prob(s, p):
     return pr
 
 
-def integrate(f, p):
-    integral = 0
-    for block in f['blocks']:
-        integral += prob(block[0], p) * (x**block[1])
+def integrate(f, p, mode='polynomial'):
+    if mode=='polynomial':
+        integral = 0
+        for block in f:
+            integral += prob(block[0], p) * (x**block[1])
+    if mode=='list':
+        max_deg = max([block[1] for block in f])
+        integral = [0 for i in range(max_deg + 1)]
+        for block in f:
+            integral[block[1]] += prob(block[0], p)
     return integral
