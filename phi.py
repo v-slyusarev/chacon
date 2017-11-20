@@ -9,22 +9,19 @@ def omega_0(x, p):
         return 0
 
 
-omega = omega_0
-
-
 class Phi:
-    def phi_by_omega(self):
+    def phi_by_omega(self, omega):
         phi = [(['z', i + 1], omega(i, self.p)) for i in range(self.p - 1)]
         return phi
 
-    def __init__(self, m_max, p):
+    def __init__(self, m_max, p, omega=omega_0):
         self.p = p
         self.blocks = {}
         for m in range(1, m_max + 1):
             if m in self.blocks:
                 continue
             if m == 1:
-                self.blocks[1] = self.phi_by_omega()
+                self.blocks[1] = self.phi_by_omega(omega)
             if m != 1:
                 self.blocks[m] = self.add(self.shift(self.blocks[m - 1]))
 
