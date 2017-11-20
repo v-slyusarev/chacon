@@ -1,5 +1,7 @@
 from phi import Phi
 from integrate import *
+from omegas import square_omega
+
 
 def trim(list):
     i = 0
@@ -14,7 +16,7 @@ def is_symmetric(list):
             return False
     return True
 for p in range(3, 100):
-    PHI=Phi(10, p).blocks
+    PHI=Phi(10, p, omega=square_omega).blocks
     for m in range(1, 10):
         list = integrate(PHI[m], p, mode='list')
         if not is_symmetric(trim(list)):
