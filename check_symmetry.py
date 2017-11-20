@@ -1,6 +1,6 @@
 from phi import Phi
 from integrate import *
-from omegas import square_omega_1, square_omega_2
+from omegas import *
 
 
 def trim(list):
@@ -35,3 +35,8 @@ print('checking omega(x) = x * (p - x)')
 
 for p in (3, 5, 7, 11):
     check_phi(PHI=Phi(10, p, omega=square_omega_2))
+
+print('checking omega(x) = x^2')
+
+for p in (3, 5, 7, 11):
+    check_phi(PHI=Phi(10, p, omega=square_omega_3))

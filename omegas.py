@@ -13,3 +13,8 @@ def square_omega_1(x, p):
 def square_omega_2(x, p):
     assert x < p
     return x * (p - x) if 0 <= x < p - 1 else 0
+
+
+def square_omega_3(x, p):
+    assert x < p
+    return x**2 if 0 <= x < p - 1 else 0
