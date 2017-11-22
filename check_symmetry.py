@@ -17,26 +17,18 @@ def is_symmetric(list):
     return True
 
 
+m_max = 100
+
 def check_phi(PHI):
     p = PHI.p
     PHI = PHI.blocks
-    for m in range(1, 10):
+    for m in range(1, m_max):
         list = integrate(PHI[m], p, mode='list')
         if not is_symmetric(trim(list)):
             print("False for p =", p, "; m =", m)
             break
 
-print('checking omega(x) = x * (p - x - 1)')
+print('checking omega(x) = legendre')
 
-for p in (3, 5, 7, 11):
-    check_phi(PHI=Phi(10, p, omega=square_omega_1))
-
-print('checking omega(x) = x * (p - x)')
-
-for p in (3, 5, 7, 11):
-    check_phi(PHI=Phi(10, p, omega=square_omega_2))
-
-print('checking omega(x) = x^2')
-
-for p in (3, 5, 7, 11):
-    check_phi(PHI=Phi(10, p, omega=square_omega_3))
+for p in (5, 13, 17):
+    check_phi(PHI=Phi(m_max, p, omega=legendre_omega))
