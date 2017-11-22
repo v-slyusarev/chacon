@@ -17,7 +17,7 @@ def is_symmetric(list):
     return True
 
 
-m_max = 100
+m_max = 10
 
 def check_phi(PHI):
     p = PHI.p
@@ -28,7 +28,6 @@ def check_phi(PHI):
             print("False for p =", p, "; m =", m)
             break
 
-print('checking omega(x) = legendre')
 
-for p in (5, 13, 17):
-    check_phi(PHI=Phi(m_max, p, omega=legendre_omega))
+for p in range(3, 20):
+    check_phi(PHI=Phi(m_max, p, omega=step_omega))

@@ -5,29 +5,35 @@ def omega_0(x, p):
         return x
     else:
         return 0
+# all symmetric
 
 
 def square_omega_1(x, p):
     assert x < p
     return x * (p - x - 1) if 0 <= x < p - 1 else 0
+# symmetric only for p=3
 
 
 def square_omega_2(x, p):
     assert x < p
     return x * (p - x) if 0 <= x < p - 1 else 0
+# symmetric only for p=3
 
 
 def square_omega_3(x, p):
     assert x < p
     return x**2 if 0 <= x < p - 1 else 0
+# symmetric only for p=3
 
 
 def linear_omega_1(x, p):
     return 41 * omega_0(x, p)
+# all symmetric
 
 
 def linear_omega_2(x, p):
     return omega_0(x, p) + 41
+# all symmetric
 
 
 def step_omega(x, p):
@@ -41,6 +47,10 @@ def step_omega(x, p):
                 return 1
             else:
                 return 2
+# all symmetric
+
 
 def legendre_omega(x, p):
     return legendre.calculateLegendre(x + 1, p) + 1
+# symmetric unless p is pythagorean prime
+# for pythagorean primes symmetric unless m=3
