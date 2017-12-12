@@ -1,7 +1,7 @@
 from phi import Phi
 from integrate import *
 from omegas import *
-
+from sys import exit
 
 def trim(list):
     i = 0
@@ -25,9 +25,20 @@ def check_phi(PHI):
     for m in range(1, m_max):
         list = integrate(PHI[m], p, mode='list')
         if not is_symmetric(trim(list)):
-            print("False for p =", p, "; m =", m)
-            break
+            return False
 
+    return True
 
-for p in range(3, 20):
-    check_phi(PHI=Phi(m_max, p, omega=step_omega))
+count=0
+while True:
+    for j in range(1, 100):
+        p = 2 * j + 1
+        omega = generate_omega_for_l4(p)
+        PHI = Phi(20, p, omega=omega)
+        if not check_phi(PHI):
+            print(p, "   :   ", [omega(x,p) for x in range(p-1)])
+            exit(0)
+
+    count += 1
+    if(count % 100 == 0):
+        print('checked for ', count, 'random omegas and still true')
