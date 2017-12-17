@@ -1,0 +1,172 @@
+\documentclass[a4paper]{article}
+\usepackage[margin=1.0in]{geometry}
+
+\usepackage[l2tabu,orthodox]{nag}
+\usepackage{indentfirst}
+\usepackage{amssymb,amsfonts}
+\usepackage[]{mathtools}
+\usepackage{cmap}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{ucs}
+\usepackage[russian,english]{babel}
+\usepackage[babel = true]{microtype}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos, textsize=tiny]{todonotes}
+
+\usepackage{color}
+\definecolor{darkblue}{rgb}{0,0,.75}
+\definecolor{darkred}{rgb}{.7,0,0}
+\definecolor{darkgreen}{rgb}{0,.7,0}
+
+\usepackage[
+    draft = false,
+    unicode = true,
+    colorlinks = true,
+    allcolors = blue,
+    hyperfootnotes = true
+]{hyperref}
+\usepackage{amsmath}
+\usepackage{amsthm}
+    \theoremstyle{plain}
+    \newtheorem{theorem}{Theorem}
+    \newtheorem{task}{Задача}
+    \newtheorem{lemma}{Lemma}
+    \newtheorem{proposition}{Proposition}
+    \newtheorem{corollary}{Corollary}
+    \theoremstyle{definition}
+    \newtheorem{definition}{Definition}
+    \newtheorem*{notation}{Notation}
+    \newtheorem{example}{Example}
+        \newtheorem*{answer}{Ответ}
+    \newtheorem*{draft}{Черновик ответа}
+
+\begin{document}
+\textbf{The following is true ONLY for odd $\omega$.\\}
+We can generalize the definition of $\phi$ functional:
+\begin{definition}
+    $$
+    \phi(x) = \begin{cases}
+                    \omega(x_0), & 0 \le x_0 \le p - 2 \\
+                    \phi(\sigma x), & x_0 = p - 1
+                \end{cases}
+    $$
+\end{definition}
+    The classic case is hence described by $\omega(j)=j$. This is the only non-trivial $\omega$ for $p=3$. \\
+    
+\begin{definition}
+Let $\phi_\star = \min\limits_x \phi(x), \phi^\star = \max\limits_x \phi(x), \delta=\phi^\star - \phi_\star$. We say that a functional $\phi$  \textit{has the palindromic property} iff 
+$$
+\forall j,\ 0 \le j \le m\delta:   \pi_m(m\phi_\star + j)=\pi_m(m\phi^\star-j)
+$$
+\end{definition}
+    
+    Let us find the sufficient conditions for $\phi$ to have the palindromic property.
+    
+\begin{definition}
+We call a function $\omega$  \textit{binary-antipalindromic} iff
+\[\begin{cases}
+	\mathrm{Ran }\ \omega = \{0,1\} \\
+	\forall j,\ 0 \le j \le p-2: \  \omega(j) = 1 - \omega(p-2-j)
+\end{cases}\]
+\end{definition}
+
+
+\begin{example}
+The usual $\omega(j)=j$ is binary-antipalindromic for $p = 3$. Indeed,
+$$
+\omega(0) = 0 = 1 - \omega(1) = 1 - \omega(3 - 2 - 0)
+$$
+$$
+\omega(1) = 1 = 1 - \omega(0) = 1 - \omega(3 - 2 - 1)
+$$
+\end{example}
+
+\begin{theorem}
+If $\omega$ is binary-antipalindromic, the corresponding $\phi$ has the palindromic property.
+\end{theorem}
+
+We will need the following lemmas to prove the theorem. (Note that the lemmas generalize Lemma 3.1 and Lemma 3.2 from the article "Weak limits of powers of Chacon's automorphism"\ )
+
+\begin{lemma}
+If $\omega$ is binary-antipalindromic, the probability distributions of the random sequences $\{\phi(S^j x)\}_{j \ge 0}$ and $\{ 1 - \phi(S^{-j} x)\}_{j \ge 0}$ are the same.
+\end{lemma}
+\begin{proof}
+Let $x \in \Gamma \setminus \{(p-1,p-1,\ldots)\}$. We
+say that $\mathrm{order}(x) = k \ge 0$ if $x_0=x_1=\ldots=x_{k-1}=p-1$ and $x_k \ne p-1$.
+Since the first digit in the sequence $(\ldots, x-1,x,x+1)$ follows a periodic pattern
+$(\ldots, 0, 1, 2, \ldots,p-2, p-1, 0, 1, 2, \ldots,p-2, p-1, \ldots)$, the contribution of points of order $0$ in the sequence
+$\{\phi(S^j x)\}_{j \ge 0}$ provides a sequence of blocks $\omega(0),\omega(1),\ldots, \omega(p-2)$ separated by one symbol
+given by a point of higher order. To fill in the missing symbols corresponding to positions $j$ 
+such that $\mathrm{order}(x+j) \ge 1$, we observe that, if $x$ starts with a $p-1$, then for all $j \ge 0$, $\phi(x+pj)=\phi(\sigma x + j)$. Hence the missing symbols are given by the symbols $\{\phi(S^j \sigma x)\}_{j \ge 0}$.\\
+Let us observe an example for $p=7$ produced by the Legendre symbol-like $\omega(x)=((\frac{x+1}{7}) + 1)/2$ (which is binary-antipalindromic due to the Quadratic reciprocity):\bigskip\\
+$\begin{array}{cccccccccccccccccccccccccccl}
+1 & 1 & 0 & 1 & 0 & 0 & . & 1 & 1 & 0 & 1 & 0 & 0 &. & 1 & 1 & 0 & 1 & 0 & 0 & . & 1 & 1 & 0 & 1 & 0 & 0 &\leftarrow \text{contribution of order }0 \\
+  &   &   &   &   &   & 1 &   &   &   &   &   &   &1 &   &   &   &   &   &   & 0 &   &   &   &   &   &   &\leftarrow \text{contribution of order }1 \\
+1 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 &\leftarrow \text{the whole sequence} \\
+\end{array}$
+\bigskip\\
+It is proved by induction on order that, using that $\sigma$ preserves the measure $\lambda$, the probability distributions of the random sequences $\{\phi(S^j x)\}_{j \ge 0}$ and $\{ 1 - \phi(S^{-j} x)\}_{j \ge 0}$ for binary-antipalindromic $\omega$ are the same.
+\end{proof}
+\begin{lemma}
+If $\{\phi(S^j x)\}_{j \ge 0} \overset{d}{=} \{ 1 - \phi(S^{-j} x)\}_{j \ge 0}$, then for any $0 \le j \le m:\ \pi_m(j)=\pi_m(m-j)$
+\end{lemma}
+\begin{proof}
+The coefficient $\pi_m(m-j)$ is equal to the probability to see $(m-j)$ digits equal to 1 in the $m$ consecutive terms in $\{\phi(S^j x)\}_{j \ge 0}$. Thus, $\pi_m(m-j)$ is also equal to the probability to see $j$ digits equal to $0$ in the $m$ consecutive terms. Using Lemma 1, we conclude the statement of this lemma.\\
+\end{proof}
+
+To prove the theroem, it is now enough to notice that in Definition 1 for $\phi$ produced by binary-antipalindromic $\omega$ we may substitute $\phi_\star = 0, \phi^\star = 1, \zeta=1$ and hence the palindromic properly is equivalent to $\forall j, 0 \le j \le m:\ \pi_m(j)=\pi_m(m-j)$.
+This summarizes the consideration of $\omega$ functions with $\mathrm{Ran }\ \omega = \{0,1\} $. Let us skip to the general construction.
+
+\begin{definition}
+We call a function $\omega$  \textit{antipalindromic} iff
+\[\begin{cases}
+	\mathrm{Ran }\ \omega = \{0,1, \ldots, \zeta\} \\
+	\forall j,\ 0 \le j \le p-2: \  \omega(j) = \zeta - \omega(p-2-j)
+\end{cases}\]
+\end{definition}
+
+
+\begin{notation}
+We further use $[M, N]$ instead of $\{M,M+1, \ldots, N\}$ for shortness.
+\end{notation}
+Note that given $\omega$ such that $\mathrm{Ran}\ \omega = [0,\zeta]$, we have $\mathrm{Ran}\ \phi = [0,\zeta]$ and $\mathrm{Ran}\ \phi^{(m)} = [0,m\zeta]$
+
+\begin{lemma}
+If $\omega$ is binary-antipalindromic, the probability distributions of the random sequences $\{\phi(S^j x)\}_{j \ge 0}$ and $\{ \zeta - \phi(S^{-j} x)\}_{j \ge 0}$ are the same.
+\end{lemma}
+This lemma is shown similarly to the Lemma 1.\bigskip \\
+The following theorem generalizes Theorem 1.
+\begin{theorem}
+If $\omega$ is antipalindromic, the corresponding $\phi$ has the palindromic property.
+\end{theorem}
+\begin{proof} In Definition 1, we may substitute $\phi_\star = 0, \phi^\star = \delta = \zeta$. Hence it is enough to show that \[\forall j,\ 0 \le j \le m\zeta: \pi_m(j) = \pi_m(m \zeta - j).\]
+$\pi_m(m \zeta - j) = \lambda(\phi^{(m)}(x)=m\zeta-j)=
+\\=\sum\limits_{(\phi_1, \ldots, \phi_m)} \lambda\big(\phi(x)=\phi_1, \phi^{(2)}(x) = \phi_2, \ldots, \phi^{(m)}(x)=\phi_m\big) \mathbb{I} (\phi_1 + \ldots + \phi_k = m\zeta - j) = 
+\\ = \sum\limits_{(\phi_1, \ldots, \phi_m)} \lambda\big(\phi(x)=\phi_1, \phi^{(2)}(x) = \phi_2, \ldots, \phi^{(m)}(x)=\phi_m\big) \mathbb{I} \big((\zeta-\phi_1) + \ldots + (\zeta-\phi_m) = j\big)$\\
+Using Lemma 3, this equals to:\\
+$\sum\limits_{(\phi_1, \ldots, \phi_m)} \lambda\big(\phi(x)=\zeta-\phi_m, \phi^{(2)}(x) = \zeta-\phi_{m-1}, \ldots, \phi^{(m)}(x)=\zeta-\phi_1\big) \mathbb{I} \big(\sum\limits_k (\zeta-\phi_k) = j\big) = \left< \psi_k := \zeta - \phi_k \right> = 
+\\ =\sum\limits_{(\psi_1, \ldots, \psi_m)} \lambda(\phi(x)=\psi_1, \phi^{(2)}(x) = \psi_2, \ldots, \phi^{(m)}(x)=\psi_m) \mathbb{I} (\psi_1 + \ldots + \psi_m = j) =  \lambda(\phi^{(m)}(x)=j)= \\ =\pi_m(j)$
+\end{proof}
+We may describe a larger set of functionals $\phi$ having the palindromic property with the use of following lemma.
+\begin{lemma}[On the affine transformations]
+Let $\omega:[0,p-2] \rightarrow [0, \zeta]$ be antipalindromic, then for any $a > 0, b \ge 0$:\\
+$\phi'(x) = \begin{cases}
+                    a \omega(x_0) + b, & 0 \le x_0 \le p - 2 \\
+                    \phi'(\sigma x), & x_0 = p - 1
+                \end{cases}$ is antipalindromic.
+\end{lemma}
+\begin{proof}
+Let $\pi_m'(j) = \lambda(\phi'^{(m)}(x)=j)$. In terms of Definition 1, $\phi_\star = b, \phi^\star = a\zeta + b, \delta = a\zeta$. Let us prove that $\pi_m'(mb + j) = \pi_m' (m(a\zeta+b)-j)$.\\
+First, we perform the division with remainder: $j = qa + r$. It follows from the construction of $\phi'$ that $\pi_m'(mb + qa + r) = 0$ if $r \ne 0$. Yet, $m(a\zeta+b)-j = m(a\zeta+b)-qa - r = mb + (m\zeta -q)a - r$ and hence $\pi_m' (m(a\zeta+b)-j) = 0$ if $r \ne 0$.\\
+Thus, it remains to prove that $\pi_m'(mb + qa) = \pi_m' (m(a\zeta+b)-qa)$.
+Note that we may restore the values of $\phi$ produced by $\omega$ from the values of $\phi'$. Indeed, consider the bijection $i: \{b, a + b, 2a + b \ldots, a\zeta + b\} \rightarrow [0, \zeta]$ such that $i(j) = \frac{j-b}{a}$. It's easy to see that $i(\phi'(x))=\phi(x)$. Subsequently, we may define $i^{(m)}(j) = \frac{j-mb}{m}$ and conclude $i^{(m)}(\phi'^{(m)}(x))=\phi(x)$.\\
+Now let us prove $\pi_m'(mb + qa) = \pi_m' (m(a\zeta+b)-qa)$ using the fact that $i^{(m)}$ is bijective.\\
+\[\pi_m'(mb + qa) = \lambda(\phi'^{(m)}(x)=mb + qa) = \lambda\big(i^{(m)}(\phi'^{(m)}(x))=i^{(m)}(mb + qa)\big)  =\]\[= \lambda(\phi^{(m)}(x)= \frac{mb-qa-mb}{m})= \lambda(\phi^{(m)}(x)= q)=\pi_m(q)\]
+Similarly, $\pi_m' (m(a\zeta+b)-qa) = \pi_m(m\zeta - q)$. Since $\omega$ is antipalindromic, it follows from Theorem 2 that $\pi_m(q) = \pi_m(m \zeta - q)$ and then $\pi_m'(mb + qa) = \pi_m' (m(a\zeta+b)-qa)$.
+\end{proof}
+\begin{proposition}[On inheritance of polindromic property]
+Let $\phi$ have the polindromic property, and let there be $\phi'$ such that there exists bijection $i^{(m)}: \mathrm{Ran}\ \phi'^{(m)} \rightarrow \mathrm {Ran}\ \phi^{(m)}$. Then $\phi'$ has the polindromic property.
+\end{proposition}
+The proof of this must be the same as for Lemma 4.
+\end{document}
