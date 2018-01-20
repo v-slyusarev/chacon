@@ -1,0 +1,339 @@
+\documentclass[a4paper]{article}
+\usepackage[margin=1.0in]{geometry}
+
+\usepackage[l2tabu,orthodox]{nag}
+\usepackage{indentfirst}
+\usepackage{amssymb,amsfonts}
+\usepackage[]{mathtools}
+\usepackage{cmap}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{ucs}
+\usepackage[russian,english]{babel}
+\usepackage[babel = true]{microtype}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos, textsize=tiny]{todonotes}
+
+\usepackage{color}
+\definecolor{darkblue}{rgb}{0,0,.75}
+\definecolor{darkred}{rgb}{.7,0,0}
+\definecolor{darkgreen}{rgb}{0,.7,0}
+
+\usepackage[
+    draft = false,
+    unicode = true,
+    colorlinks = true,
+    allcolors = blue,
+    hyperfootnotes = true
+]{hyperref}
+\usepackage{amsmath}
+\usepackage{amsthm}
+    \theoremstyle{plain}
+    \newtheorem{theorem}{Theorem}[section]
+    \newtheorem{task}{Задача}[section]
+    \newtheorem{lemma}{Lemma}[section]
+    \newtheorem{proposition}{Proposition}[section]
+    \newtheorem{corollary}{Corollary}[section]
+    \theoremstyle{definition}
+    \newtheorem{definition}{Definition}
+    \newtheorem*{notation}{Notation}
+    \newtheorem{example}{Example}
+        \newtheorem*{answer}{Ответ}
+    \newtheorem*{draft}{Черновик ответа}
+\usepackage{thmtools}    
+
+\usepackage{hyperref}
+\usepackage[nameinlink]{cleveref}
+
+
+\makeatletter
+\newcommand*{\indep}{%
+  \mathbin{%
+    \mathpalette{\@indep}{}%
+  }%
+}
+\newcommand*{\@indep}[2]{%
+  % #1: math style
+  % #2: empty or \not
+  \sbox0{$#1\perp\m@th$}%        box 0 contains \perp symbol
+  \sbox2{$#1=$}%                 box 2 for the height of =
+  \sbox4{$#1\vcenter{}$}%        box 4 for the height of the math axis
+  \rlap{\copy0}%                 first \perp
+  \dimen@=\dimexpr\ht2-\ht4-.2pt\relax
+      % The equals symbol is centered around the math axis.
+      % The following equations are used to calculate the
+      % right shift of the second \perp:
+      % [1] ht(equals) - ht(math_axis) = line_width + 0.5 gap
+      % [2] right_shift(second_perp) = line_width + gap
+      % The line width is approximated by the default line width of 0.4pt
+  \kern\dimen@
+  {#2}%
+      % {\not} in case of \nindep;
+      % the braces convert the relational symbol \not to an ordinary
+      % math object without additional horizontal spacing.
+  \kern\dimen@
+  \copy0 %                       second \perp
+} 
+
+\begin{document}
+\section{Basic definitions}
+$\Gamma := \mathbb{Z}_p = \left\{x = \left(x_0, x_1, x_2, \ldots \right), x_k \in \{0, 1, \ldots, p - 1\} \right\}$
+
+$\Gamma' := \Gamma \setminus \{(p-1,p-1,\ldots)\}$
+
+$\lambda$ is the Haar measure on $\Gamma$.
+
+    We define two $\lambda$-preserving transformations on $\Gamma$:
+    \begin{itemize}
+    \item $\sigma:\ x=\left(x_0, x_1, x_2, \ldots \right) \mapsto \sigma x = \left(x_1, x_2, \ldots \right)$
+    \item $S:\ x \mapsto x + 1$, where $1:=(1,0,0,\ldots)$
+    \end{itemize}
+    Let $\phi: \Gamma' \rightarrow \mathbb{Z}$ be the <<first not $(p-1)$>> functional:\\
+    \[\phi(x):=x_i\text{ if }x=(p-1, \ldots, p-1, x_i, x_{i+1}, \ldots)\]
+    \[\phi^{(0)}(x):=0;\ \phi^{(m)}(x):=\phi(x)+\phi(Sx)+\ldots+\phi(S^{m-1}x)\]
+
+Let us define $\pi_m$ as the probability distribution of $\phi^{(m)}$ on $\mathbb{Z}$:
+    \[\pi_m(j) = \lambda(\phi^{(m)}=j)\]
+    We consider the sequences of polynomials $P_m^p$ produced by $\pi_m$ for fixed $p$ and $m$:
+    \[P_m^p(t):= \mathbb{E}_\lambda\left[ t^{\phi^{(m)}(x)}\right] = \sum\limits_{j=0}^m \pi_m(j) t^j \]
+\section{Palindromic property}
+Let $p \ge 3$ be an \textit{odd} number.
+
+We can generalize the definition of $\phi$ functional:
+\begin{definition}
+    $$
+    \phi(x) = \begin{cases}
+                    \omega(x_0), & 0 \le x_0 \le p - 2 \\
+                    \phi(\sigma x), & x_0 = p - 1
+                \end{cases}
+    $$
+\end{definition}
+    The classic case is hence described by $\omega(j)=j$. This is the only non-trivial $\omega$ for $p=3$. \\
+    
+\begin{definition}
+Let $\phi_\star = \min\limits_x \phi(x), \phi^\star = \max\limits_x \phi(x), \delta=\phi^\star - \phi_\star$. We say that a functional $\phi$  \textit{has the palindromic property} iff 
+$$
+\forall j,\ 0 \le j \le m\delta:   \pi_m(m\phi_\star + j)=\pi_m(m\phi^\star-j)
+$$
+\end{definition}
+    
+    Let us find the sufficient conditions for $\phi$ to have the palindromic property.
+    
+\begin{definition}
+We call a function $\omega$  \textit{binary-antipalindromic} iff
+\[\begin{cases}
+	\mathrm{Ran }\ \omega = \{0,1\} \\
+	\forall j,\ 0 \le j \le p-2: \  \omega(j) = 1 - \omega(p-2-j)
+\end{cases}\]
+\end{definition}
+
+
+\begin{example}
+The usual $\omega(j)=j$ is binary-antipalindromic for $p = 3$. Indeed,
+$$
+\omega(0) = 0 = 1 - \omega(1) = 1 - \omega(3 - 2 - 0)
+$$
+$$
+\omega(1) = 1 = 1 - \omega(0) = 1 - \omega(3 - 2 - 1)
+$$
+\end{example}
+
+\begin{theorem}
+If $\omega$ is binary-antipalindromic, the corresponding $\phi$ has the palindromic property.
+\end{theorem}
+
+We will need the following lemmas to prove the theorem. (Note that the lemmas generalize Lemma 3.1 and Lemma 3.2 from the article "Weak limits of powers of Chacon's automorphism"\ )
+
+\begin{lemma} \label{binDistLemma}
+If $\omega$ is binary-antipalindromic, the probability distributions of the random sequences $\{\phi(S^j x)\}_{j \ge 0}$ and $\{ 1 - \phi(S^{-j} x)\}_{j \ge 0}$ are the same.
+\end{lemma}
+\begin{proof}
+Let $x \in \Gamma \setminus \{(p-1,p-1,\ldots)\}$. We
+say that $\mathrm{order}(x) = k \ge 0$ if $x_0=x_1=\ldots=x_{k-1}=p-1$ and $x_k \ne p-1$.
+Since the first digit in the sequence $(\ldots, x-1,x,x+1)$ follows a periodic pattern
+$(\ldots, 0, 1, 2, \ldots,p-2, p-1, 0, 1, 2, \ldots,p-2, p-1, \ldots)$, the contribution of points of order $0$ in the sequence
+$\{\phi(S^j x)\}_{j \ge 0}$ provides a sequence of blocks $\omega(0),\omega(1),\ldots, \omega(p-2)$ separated by one symbol
+given by a point of higher order. To fill in the missing symbols corresponding to positions $j$ 
+such that $\mathrm{order}(x+j) \ge 1$, we observe that, if $x$ starts with a $p-1$, then for all $j \ge 0$, $\phi(x+pj)=\phi(\sigma x + j)$. Hence the missing symbols are given by the symbols $\{\phi(S^j \sigma x)\}_{j \ge 0}$.\\
+Let us observe an example for $p=7$ produced by the Legendre symbol-like $\omega(x)=((\frac{x+1}{7}) + 1)/2$ (which is binary-antipalindromic due to the Quadratic reciprocity):\bigskip\\
+$\begin{array}{cccccccccccccccccccccccccccl}
+1 & 1 & 0 & 1 & 0 & 0 & . & 1 & 1 & 0 & 1 & 0 & 0 &. & 1 & 1 & 0 & 1 & 0 & 0 & . & 1 & 1 & 0 & 1 & 0 & 0 &\leftarrow \text{contribution of order }0 \\
+  &   &   &   &   &   & 1 &   &   &   &   &   &   &1 &   &   &   &   &   &   & 0 &   &   &   &   &   &   &\leftarrow \text{contribution of order }1 \\
+1 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 &\leftarrow \text{the whole sequence} \\
+\end{array}$
+\bigskip\\
+We may build $\{ 1 - \phi(S^{-j} x)\}_{j \ge 0}$ from $\{\phi(S^j x)\}_{j \ge 0}$ with a composition of two measure-preserving transformations:
+\begin{enumerate}
+\item The 'reverse' transformation  $\{a_j\}_{j \ge 0} \mapsto \{a_{-j}\}_{j \ge 0}$ 
+\item The 'flip' transformation which substitutes each element $k \in \{b_j\}_{j \ge 0}$ with $1-k$, turning the sequence into $\{ 1 - b_j\}_{j \ge 0}$ .
+\end{enumerate}
+By the definition of binary-antipalindromic, it is clear that this procedure works as identity transformation when applied to $\{\phi(S^j x)\}_{j \ge 0}$.
+\end{proof}
+\begin{lemma}
+If $\{\phi(S^j x)\}_{j \ge 0} \overset{d}{=} \{ 1 - \phi(S^{-j} x)\}_{j \ge 0}$, then for any $0 \le j \le m:\ \pi_m(j)=\pi_m(m-j)$
+\end{lemma}
+\begin{proof}
+The coefficient $\pi_m(m-j)$ is equal to the probability to see $(m-j)$ digits equal to 1 in the $m$ consecutive terms in $\{\phi(S^j x)\}_{j \ge 0}$. Thus, $\pi_m(m-j)$ is also equal to the probability to see $j$ digits equal to $0$ in the $m$ consecutive terms. Using \Cref{binDistLemma}, we conclude the statement of this lemma.\\
+\end{proof}
+
+To prove the theroem, it is now enough to notice that in Definition 1 for $\phi$ produced by binary-antipalindromic $\omega$ we may substitute $\phi_\star = 0, \phi^\star = 1, \zeta=1$ and hence the palindromic properly is equivalent to $\forall j, 0 \le j \le m:\ \pi_m(j)=\pi_m(m-j)$.
+This summarizes the consideration of $\omega$ functions with $\mathrm{Ran }\ \omega = \{0,1\} $. Let us skip to the general construction.
+
+\begin{definition}
+We call a function $\omega$  \textit{antipalindromic} iff
+\[\begin{cases}
+	\mathrm{Ran }\ \omega = \{0,1, \ldots, \zeta\} \\
+	\forall j,\ 0 \le j \le p-2: \  \omega(j) = \zeta - \omega(p-2-j)
+\end{cases}\]
+\end{definition}
+
+
+\begin{notation}
+We further use $[M, N]$ instead of $\{M,M+1, \ldots, N\}$ for shortness.
+\end{notation}
+Note that given $\omega$ such that $\mathrm{Ran}\ \omega = [0,\zeta]$, we have $\mathrm{Ran}\ \phi = [0,\zeta]$ and $\mathrm{Ran}\ \phi^{(m)} = [0,m\zeta]$
+
+\begin{lemma} \label{distLemma}
+If $\omega$ is antipalindromic, the probability distributions of the random sequences $\{\phi(S^j x)\}_{j \ge 0}$ and $\{ \zeta - \phi(S^{-j} x)\}_{j \ge 0}$ are the same.
+\end{lemma}
+This lemma is shown similarly to the \Cref{binDistLemma}.\bigskip \\
+The following theorem generalizes Theorem 1.
+\begin{theorem}
+If $\omega$ is antipalindromic, the corresponding $\phi$ has the palindromic property.
+\end{theorem}
+\begin{proof} In Definition 1, we may substitute $\phi_\star = 0, \phi^\star = \delta = \zeta$. Hence it is enough to show that \[\forall j,\ 0 \le j \le m\zeta: \pi_m(j) = \pi_m(m \zeta - j).\]
+$\pi_m(m \zeta - j) = \lambda(\phi^{(m)}(x)=m\zeta-j)=
+\\=\sum\limits_{(\phi_1, \ldots, \phi_m)} \lambda\big(\phi(x)=\phi_1, \phi^{(2)}(x) = \phi_2, \ldots, \phi^{(m)}(x)=\phi_m\big) \mathbb{I} (\phi_1 + \ldots + \phi_k = m\zeta - j) = 
+\\ = \sum\limits_{(\phi_1, \ldots, \phi_m)} \lambda\big(\phi(x)=\phi_1, \phi^{(2)}(x) = \phi_2, \ldots, \phi^{(m)}(x)=\phi_m\big) \mathbb{I} \big((\zeta-\phi_1) + \ldots + (\zeta-\phi_m) = j\big)$\\
+Using \Cref{distLemma}, this equals to:\\
+$\sum\limits_{(\phi_1, \ldots, \phi_m)} \lambda\big(\phi(x)=\zeta-\phi_m, \phi^{(2)}(x) = \zeta-\phi_{m-1}, \ldots, \phi^{(m)}(x)=\zeta-\phi_1\big) \mathbb{I} \big(\sum\limits_k (\zeta-\phi_k) = j\big) = \left< \psi_k := \zeta - \phi_k \right> = 
+\\ =\sum\limits_{(\psi_1, \ldots, \psi_m)} \lambda(\phi(x)=\psi_1, \phi^{(2)}(x) = \psi_2, \ldots, \phi^{(m)}(x)=\psi_m) \mathbb{I} (\psi_1 + \ldots + \psi_m = j) =  \lambda(\phi^{(m)}(x)=j)= \\ =\pi_m(j)$
+\end{proof}
+We may describe a larger set of functionals $\phi$ having the palindromic property with the use of following lemma.
+\begin{lemma}[On the affine transformations]\label{affineLemma}
+Let $\omega:[0,p-2] \rightarrow [0, \zeta]$ be antipalindromic, then for any $a > 0, b \ge 0$:\\
+$\phi'(x) = \begin{cases}
+                    a \omega(x_0) + b, & 0 \le x_0 \le p - 2 \\
+                    \phi'(\sigma x), & x_0 = p - 1
+                \end{cases}$ is antipalindromic.
+\end{lemma}
+\begin{proof}
+Let $\pi_m'(j) = \lambda(\phi'^{(m)}(x)=j)$. In terms of Definition 1, $\phi_\star = b, \phi^\star = a\zeta + b, \delta = a\zeta$. Let us prove that $\pi_m'(mb + j) = \pi_m' (m(a\zeta+b)-j)$.\\
+First, we perform the division with remainder: $j = qa + r$. It follows from the construction of $\phi'$ that $\pi_m'(mb + qa + r) = 0$ if $r \ne 0$. Yet, $m(a\zeta+b)-j = m(a\zeta+b)-qa - r = mb + (m\zeta -q)a - r$ and hence $\pi_m' (m(a\zeta+b)-j) = 0$ if $r \ne 0$.\\
+Thus, it remains to prove that $\pi_m'(mb + qa) = \pi_m' (m(a\zeta+b)-qa)$.
+Note that we may restore the values of $\phi$ produced by $\omega$ from the values of $\phi'$. Indeed, consider the bijection $i: \{b, a + b, 2a + b \ldots, a\zeta + b\} \rightarrow [0, \zeta]$ such that $i(j) = \frac{j-b}{a}$. It's easy to see that $i(\phi'(x))=\phi(x)$. Subsequently, we may define $i^{(m)}(j) = \frac{j-mb}{m}$ and conclude $i^{(m)}(\phi'^{(m)}(x))=\phi(x)$.\\
+Now let us prove $\pi_m'(mb + qa) = \pi_m' (m(a\zeta+b)-qa)$ using the fact that $i^{(m)}$ is bijective.\\
+\[\pi_m'(mb + qa) = \lambda(\phi'^{(m)}(x)=mb + qa) = \lambda\big(i^{(m)}(\phi'^{(m)}(x))=i^{(m)}(mb + qa)\big)  =\]\[= \lambda(\phi^{(m)}(x)= \frac{mb-qa-mb}{m})= \lambda(\phi^{(m)}(x)= q)=\pi_m(q)\]
+Similarly, $\pi_m' (m(a\zeta+b)-qa) = \pi_m(m\zeta - q)$. Since $\omega$ is antipalindromic, it follows from Theorem 2 that $\pi_m(q) = \pi_m(m \zeta - q)$ and then $\pi_m'(mb + qa) = \pi_m' (m(a\zeta+b)-qa)$.
+\end{proof}
+\begin{proposition}[On inheritance of polindromic property]
+Let $\phi$ have the polindromic property, and let there be $\phi'$ such that for any $m \in \mathbb{N}$ there exists bijection $i^{(m)}: \mathrm{Ran}\ \phi'^{(m)} \rightarrow \mathrm {Ran}\ \phi^{(m)}$. Then $\phi'$ has the polindromic property.
+\end{proposition}
+The proof of this must be the same as for \Cref{affineLemma}.
+
+\section{Recurrence formulae for linear $\omega$}
+\begin{notation} We denote $n$th triangle number $\frac{n(n+1)}{2}$ as $\Delta_n$ \end{notation}
+\begin{lemma}\label{simpleCase} $P_{pm}^p(t)=t^{\Delta_{p-2}}P_m^p(t)$
+\end{lemma}
+\begin{proof}
+Let $x \in \Gamma'$. Recalling the structure of $\{\phi(S^j x)\}_{j \ge 0}$, the value of $\phi^{(pm)}(x)$ is the sum of:
+\begin{itemize}
+\item the order-$0$ points. There are exactly $(p-1)m$ points following the repeating pattern $\ldots,(p-2),0,1,2,...,(p-2),0,1,\ldots$. Their contribution is $m$ times the sum of integers $0,1,\ldots,(p-2)$ which is $\frac{(p-1)(p-2)}{2}m=m\Delta_{p-2}$
+\item the higher-order points. Their contribution is $\phi^{(m)}(\sigma x)$.
+\end{itemize}
+Hence $\phi^{pm}(x) = m\Delta_{p-2} + \phi^{(m)}(\sigma x)$. By the definition of polynomials $P_m(t)$ it implies 
+$P_pm(t) = \mathbb{E}_\lambda\left[ t^{\phi^{(pm)}(x)}\right] = 
+\mathbb{E}_\lambda\left[ t^{m\Delta_{p-2} + \phi^{(m)}(\sigma x)}\right] = 
+t^{m\Delta_{p-2}} \mathbb{E}_\lambda \left[ t^{\phi^{(m)} (\sigma x)}  \right] = 
+t^{m\Delta_{p-2} }P_m(t)$
+\end{proof}
+\begin{notation}
+Similarly to $\phi^{(m)}$, we denote $\omega^{(m)}(j) := \omega(j) + \omega(j+1) + \ldots + \omega(j+m-1)$ if $j + m < p - 1$.
+\end{notation}
+\begin{proposition} $\omega^{(k)}(j) = k j + \Delta_{k-1}$
+\end{proposition}
+\begin{proof}
+The value of $\omega^{(k)}(x_0)$ is the sum of an arithmetic progression $x_0, x_0 + 1, \ldots, x_0 + k-1$.
+\end{proof}
+\begin{lemma} \label{phiLemma}
+Let $0 < k < p$. Consider $x=(x_0,x_1,\ldots) \in \Gamma'$.
+
+$\phi^{(pm+k)}(x)= 
+\begin{cases}
+\omega^{(k)}(x_0) + m\Delta_{p-2} + \phi^{(m)}(\sigma x), & x_0 < p-k\\
+\omega^{(p-1-x_0)}(x_0) + \Delta_{x_0+k-p-1}+m\Delta_{p-2}+\phi^{(m+1)}(\sigma x), & x_0 \ge p-k
+\end{cases}$
+\end{lemma}
+\begin{proof}
+First, by the definition of $\phi^(k)$ we state $$\phi^{(pm+k)}(x) = \phi(x) + \phi(Sx) + \ldots + \phi(S^{k-1}x) + \phi^{(pm)}(S^k x)= \phi^{(k)}(x) + \phi^{(pm)}(S^k x).$$
+With the use of the previous lemma holds the equality $\phi^{(pm+k)}(x) =  \phi^{(k)}(x) + m\Delta_{p-2} + \phi^{(m)}(\sigma S^k x)$.
+By the definition of $\phi(x)$ there are two cases in the computation of $\phi^{(pm+k)}(x)$:
+\begin{itemize}
+\item The regular case $x_0 < p-k $. In this case each term in $\phi^{(k)}(x)$ is computed directly: $\phi^{(k)}(x) = \omega^{(k)}(x)$. Yet $\sigma S^k x = \sigma x$: since $S^k$ affects only the first digit of $x$, its effect if erased from $\sigma S^k x$. We may compute $\phi^{(pm+k)}(x)=\omega^{(k)}(x_0)+m\Delta_{p-2}+\phi^{(m)}(\sigma x)$.
+\item In another case, if $x_0 \ge p-k $, some term  in $\phi^{(k)}(x)$ evaluates with recursion: there exists $j \in [0,k-1]$ such that $S^j x$ begins with $p-1$ and hence $\phi(S^j x) = \phi(\sigma x)$. Therefore we may not compute $\phi^{(k)}(x)$ directly. Instead, we divide it into $\phi^{(p-1-x_0)}(x)=\omega^{(p-1-x_0)}(x)$, which is computed directly, and the rest of the terms. The latter form the sum $Z := \phi(S^j x) + \phi(S^{j+1}x) + \ldots + \phi(S^{k-1})$. Consider this sum. As stated before, $S^j x$ begins with $p-1$, so the first digits of $S^{j+1}x, S^{j+2}x, \ldots, S^{k-1}$ are $0,1,\ldots, x_0+k-p-1$. We know $\phi(S^j x) = \phi(\sigma x)$, and, knowing the first digits of the following terms, we may evaluate $Z = \phi(\sigma x) + 0 + 1 + \ldots + (x_0+k-p-1) =  \phi(\sigma x) + \Delta_{x_0+k-p-1}$. Now we aggregate $\phi^{(k)}(x)=\omega^{(p-1-x_0)}(x) + \Delta_{x_0+k-p-1}+\phi(\sigma x)$. Using the equality $\phi^{(m)}(\sigma S^k x) = \phi^{(m)}(S\sigma x) = \phi^{(m+1)}(\sigma x) - \phi(\sigma x)$, we get 
+$$\phi^{(pm+k)}(x) =  \phi^{(k)}(x) + m\Delta_{p-2} + \phi^{(m)}(\sigma S^k x) = $$ $$ = \omega^{(p-1-x_0)}(x) + \Delta_{x_0+k-p-1}+\phi(\sigma x)+ m\Delta_{p-2} + \phi^{(m+1)}(\sigma x) - \phi(\sigma x) = $$ $$ = \omega^{(p-1-x_0)}(x_0) + \Delta_{x_0+k-p-1}+m\Delta_{p-2}+\phi^{(m+1)}(\sigma x).$$
+\end{itemize}
+\end{proof}
+\begin{lemma} \label{complexCase}
+Let $0 < k < p$.
+
+$$P_{pm+k}^p(t)  =   \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{jk} P_m^p(t) 
+      + \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-2}}\sum\limits_{j=0}^{k-1} t^{j(p-k)} P_{m+1}^p(t) $$
+\end{lemma}
+\begin{proof}
+This lemma is shown using the previous result and the law of total expectation.
+$$ P_{pm+k}(t)= \mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}\right] = $$
+$$= \mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 < p-k \right]\lambda(x_0<p-k) + \mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)} | x_0 \ge p-k \right]\lambda( x_0 \ge p-k )$$
+\begin{equation}\label{eq:totalExp}= \mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 < p-k \right]\frac{p-k}{p} + \mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)} | x_0 \ge p-k \right]\frac{k}{p}
+\end{equation}
+Now we calculate each conditional expectations according to \Cref{phiLemma}. Note that the digits of $x$ are mutually independent, hence $x_0 \indep (x_1, x_2,\ldots)$ and then $x_0 \indep \sigma x$, which is used in the evaluation.
+$$\mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 < p-k \right] = 
+\mathbb{E}_\lambda\left[ t^{ \omega^{(k)}(x_0) + m\Delta_{p-2} + \phi^{(m)}(\sigma x) }| x_0 < p-k \right] = $$ 
+$$ =t^{m\Delta_{p-2}}
+\mathbb{E}_\lambda\left[ t^{ \omega^{(k)}(x_0)} | x_0 < p-k \right]
+ \mathbb{E}_\lambda\left[ t^{\phi^{(m)}(\sigma x) } \right]
+$$
+The distributions of $\sigma x$ and $x$ are the same, which implies
+$\mathbb{E}_\lambda\left[ t^{\phi^{(m)}(\sigma x) } \right] = \mathbb{E}_\lambda\left[ t^{\phi^{(m)}(x) }\right] = P_m^p(t)$. It remains to evaluate $\mathbb{E}_\lambda\left[ t^{ \omega^{(k)}(x_0) | x_0 < p-k }\right]$:
+$$ \mathbb{E}_\lambda\left[ t^{ \omega^{(k)}(x_0)} | x_0 < p-k \right] =
+ \frac{1}{p-k}\sum\limits_{j=0}^{p-k-1} t^{ \omega^{(k)}(j)} = 
+ \frac{1}{p-k}\sum\limits_{j=0}^{p-k-1} t^{kj + \Delta_{k-1}} =
+ \frac{1}{p-k} t^{\Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{kj}$$
+ Thus, \begin{equation}\label{eq:firstCondExp}\mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 < p-k \right] =
+  \frac{1}{p-k} t^{m\Delta_{p-2} + \Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{jk} P_m^p(t)
+   \end{equation}
+  
+   Similarly, we evaluate the second conditional expectation. 
+ $$\mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 \ge p-k \right] = 
+ \mathbb{E}_\lambda\left[ t^{\omega^{(p-1-x_0)}(x_0) + \Delta_{x_0+k-p-1}+m\Delta_{p-2}+\phi^{(m+1)}(\sigma x)}| x_0 \ge p-k \right] = $$
+ $$ =t^{m\Delta_{p-2}}
+ \mathbb{E}_\lambda\left[ t^{\omega^{(p-1-x_0)}(x_0) + \Delta_{x_0+k-p-1}} | x_0 \ge p-k \right] 
+ \mathbb{E}_\lambda\left[ t^{\phi^{(m+1)}(\sigma x) } \right] = $$
+  $$ =t^{m\Delta_{p-2}}
+    P_{m+1}^p(t)
+ \mathbb{E}_\lambda\left[ t^{\omega^{(p-1-x_0)}(x_0) + \Delta_{x_0+k-p-1}} | x_0 \ge p-k \right] = $$
+  $$ = \frac{1}{k} t^{m\Delta_{p-2}} P_{m+1}^p(t)
+  \sum\limits_{j=p-k}^{p-1} t^{  (p-1-j) j + \Delta_{p-2-j} + \Delta_{j+k-p-1}}  = $$
+
+We substitute the index $j$ with $q = p-1-j$ and simplify the exponent:
+$$  (p-1-j) j + \Delta_{p-2-j} + \Delta_{j+k-p-1} =
+    q(p-1-q) + \Delta_{q-1} + \Delta_{k-2-q}=
+   q(p-k)+\Delta_{k-2} 
+$$   
+Now we collect the result: 
+\begin{equation}\label{eq:secondCondExp}
+\mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 \ge p-k \right] 
+ =  \frac{1}{k} t^{m\Delta_{p-2} + \Delta_{k-2}} P_{m+1}^p(t)
+  \sum\limits_{q=0}^{k-1} t^{q(p-k)}
+  \end{equation}
+It remains to substitute (\ref{eq:firstCondExp}) and (\ref{eq:secondCondExp}) into (\ref{eq:totalExp}) to obtain the recurrent equation:
+$$P_{pm+k}(t)  =   \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{jk} P_m^p(t) 
+      + \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-2}}\sum\limits_{j=0}^{k-1} t^{j(p-k)} P_{m+1}^p(t) $$
+\end{proof}
+Bringing together the results of \Cref{simpleCase} and \Cref{complexCase}, we obtain the general recurrent law for $P_{n}^p(t)$
+\begin{theorem}[Recurrent formulae on $P_{n}^p(t)$] 
+$$ P_{pm}^p(t)  =  t^{m\Delta_{p-2}}\ P_m^p(t) $$
+$$ P_{pm+k}(t)  =   \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{jk} P_m^p(t)  + \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-2}}\sum\limits_{j=0}^{k-1} t^{j(p-k)} P_{m+1}^p(t), \ 0 < k < p $$
+\end{theorem}
+
+\end{document}
