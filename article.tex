@@ -37,7 +37,7 @@
     \theoremstyle{definition}
     \newtheorem{definition}{Definition}
     \newtheorem*{notation}{Notation}
-    \newtheorem{example}{Example}
+    \newtheorem*{example}{Example}
         \newtheorem*{answer}{Ответ}
     \newtheorem*{draft}{Черновик ответа}
 \usepackage{thmtools}    
@@ -74,6 +74,8 @@
   \kern\dimen@
   \copy0 %                       second \perp
 } 
+
+\usepackage{bbm}
 
 \begin{document}
 \section{Basic definitions}
@@ -233,7 +235,7 @@ The proof of this must be the same as for \Cref{affineLemma}.
 
 \section{Recurrence formulae for linear $\omega$}
 \begin{notation} We denote $n$th triangle number $\frac{n(n+1)}{2}$ as $\Delta_n$ \end{notation}
-\begin{lemma}\label{simpleCase} $P_{pm}^p(t)=t^{\Delta_{p-2}}P_m^p(t)$
+\begin{lemma}\label{simpleCase} $P_{pm}^p(t)=t^{m\Delta_{p-2}}P_m^p(t)$
 \end{lemma}
 \begin{proof}
 Let $x \in \Gamma'$. Recalling the structure of $\{\phi(S^j x)\}_{j \ge 0}$, the value of $\phi^{(pm)}(x)$ is the sum of:
@@ -332,8 +334,189 @@ $$P_{pm+k}(t)  =   \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-1}}\sum\limits_{j=0}
 \end{proof}
 Bringing together the results of \Cref{simpleCase} and \Cref{complexCase}, we obtain the general recurrent law for $P_{n}^p(t)$
 \begin{theorem}[Recurrent formulae on $P_{n}^p(t)$] 
-$$ P_{pm}^p(t)  =  t^{m\Delta_{p-2}}\ P_m^p(t) $$
-$$ P_{pm+k}(t)  =   \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{jk} P_m^p(t)  + \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-2}}\sum\limits_{j=0}^{k-1} t^{j(p-k)} P_{m+1}^p(t), \ 0 < k < p $$
+\begin{align}
+\label{P_pm} P_{pm}^p(t) & =  t^{m\Delta_{p-2}}\ P_m^p(t) \\
+\label{P_pm+k} P_{pm+k}^p(t) & =  \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{jk} P_m^p(t)  + \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-2}}\sum\limits_{j=0}^{k-1} t^{j(p-k)} P_{m+1}^p(t), \ 0 < k < p
+ \end{align}
 \end{theorem}
 
+
+\section{Degrees of polynomials}
+\subsection{Sequence $\hat{s}_j$}
+Here we define the substitution-produced sequence $\{\hat{s}_j\}_{j \ge 0}$. It will be useful to evaluate the degrees of $P_m^p(t)$. We build this sequence recursively. First, fix the parameter value $p \ge 3$.
+\begin{definition}[Zero-tier construction]
+Let $\hat{s}_0^{(0)} = p-2,\ \hat{s}_j^{(0)} = p-2-(j-1)$ for $j = \overline{1, p-1}$.
+\end{definition}
+Literally, $\{ \hat{s}_j^{(0)}\}$ is $p-2, p-2, p-3, \ldots, 2, 1, 0$.
+\begin{definition} [Number substitution rule]
+We substitute
+\begin{itemize}
+ \item $0$ with $p-2, p-3, \ldots, 2, 1, 0, 0$;
+ \item $1$ with $p-2, p-3, \ldots, 2, 1, 1, 0$;
+ \item $2$ with $p-2, p-3, \ldots, 2, 2, 1, 0$;
+ \item \ldots
+ \item $p-3$ with $p-2, p-3, p-3, \ldots, 2, 1, 0$;
+ \item $p-2$ with $p-2, p-2, p-3, \ldots, 2, 1, 0$;
+
+ \item etc.
+ \end{itemize}
+ Each number $q = \overline{0, p-2}$ becomes the descendent sequence of numbers from $p-2$ to $0$ with $q$ taken twice in a row.
+\end{definition}
+\begin{definition}[First-tier construction]\label{tier1}
+ We have built this sequence $\{ \hat{s}_j^{(0)}\}$  of $p$ integers. To define 
+$\hat{s}_j^{(1)}$, we substitute each number in $\{ \hat{s}_j^{(0)}\}$ according to the rule. As a result, we have the sequence $\{\hat{s}_j^{(1)}\}$ of $p^2$ integers.
+\end{definition}
+We continue the procedure ad infinitum, substituting each number in $\{ \hat{s}_j^{(l)}\}$  to define $\{ \hat{s}_j^{(l+1)}\}$ . It is easy to see that
+\begin{itemize}
+\item on each step the length of the sequence multiplies by $p$ and
+\item for each $l \ge 0$,  $\{ \hat{s}_j^{(l)}\}$ is a prefix of $\{ \hat{s}_j^{(l+1)}\}$.
+\end{itemize}
+
+There exists a countably infinite sequence $\{ \hat{s}_j^{(\infty)}\}$ which contains each of $\{ \hat{s}_j^{(l)}\}$ as a prefix.
+\begin{definition}
+Let $\{\hat{s}_j\}_{j \ge 0} := \{ \hat{s}_j^{(\infty)}\}_{j \ge 0}$.
+\end{definition}
+\begin{example}
+Let $p=4$.
+
+$\begin{array}{|c|cccc|cccc|cccc|cccc|}
+\hline
+\{ \mathbf{\hat{s}_j^{(0)}}\} & 2 & & & & 2 & & & & 1 & & & & 0 & & & \\
+\hline
+\{ \mathbf{\hat{s}_j^{(1)}}\} & 2 & 2 & 1 & 0 & 2 & 2 & 1 & 0 & 2 & 1 & 1 & 0 & 2 & 1 & 0 & 0 \\
+\hline
+\{ \mathbf{\hat{s}_j^{(2)}}\} &
+\text{\small{2210}} & \text{\small{2210}} & \text{\small{2110}} & \text{\small{2100}} &
+\text{\small{2210}} & \text{\small{2210}} & \text{\small{2110}} & \text{\small{2100}} &
+\text{\small{2210}} & \text{\small{2110}} & \text{\small{2110}} & \text{\small{2100}} &
+\text{\small{2210}} & \text{\small{2110}} & \text{\small{2100}} & \text{\small{2100}} \\
+\hline
+ \mathbf{\ldots} & & & & & & & & & & & & & & & & \\
+\hline
+\end{array} $
+\end{example}
+
+\begin{proposition}[Characteristic property of $\{\hat{s}_j\}$]\label{charProp}
+For each $m > 0,\ 0 \le j \le p-1$: $\hat{s}_{pm+j}=\hat{s}_{p(p-1-s_m) + j}$
+\end{proposition}
+\begin{proof}
+First, we find the number of the first tier where the $(pm+j)$-th element appears: $l = \log_p{m}$. This $l$-th tier consists of $p$ blocks, each having $p^l$ elements, and each block represents an element from tier $l-1$. The element  $\hat{s}_{pm+j}$ belongs to the $m$-th block of tier $l$, which is the expansion of the $m$-th element in  tier $l-1$. Hence,  
+$\hat{s}_{pm+j}$ is the $j$-th element in the substitution of $\hat{s}_m$.
+
+Note that all the substitutions are listed in tier $1$, which consists of the elements from $\hat{s}_0$ to $\hat{s}_{p^2-1}$.
+Rigorously, the substitution of $q$ if represented with the items from $\hat{s}_{p + p(p-2-q)}$ to $\hat{s}_{p + p(p-2-q) + p-1}$. If we desire the $j$-th element of this substitution (counting from 0), it is $\hat{s}_{p + p(p-2-q) + j}$. 
+
+Using this result and simplifying the index, we show that the $j$-th element in the substitution of $\hat{s}_m$ is $\hat{s}_{p(p-1-s_m) + j}$. 
+\end{proof}
+\begin{example}
+Let $p=4$. Our goal is to find $\hat{s}_{141}$.
+$$ \hat{s}_{141} = \hat{s}_{4 \cdot 35 + 1} = \hat{s}_{4(3-\hat{s}_{35}) +1}$$
+$$ \hat{s}_{35} = \hat{s}_{4 \cdot 8 + 3} = \hat{s}_{4(3-s_{8}) +3}$$
+$$\hat{s}_8 = 2 \implies \hat{s}_{35}=\hat{s}_{4(3-2)+3}=\hat{s}_7=0$$
+$$\hat{s}_{141}=\hat{s}_{4(3-\hat{s}_{35}) +1} = \hat{s}_{4(3-0)+1} = \hat{s}_{13}=1$$
+
+The answer is 1.
+
+\end{example}
+
+With the use of this property, we may make a more handy definition of $\hat{s}$. Indeed, as shown in the example, for any $j \ge p^2$ we may find $\hat{s}_j$ applying the equation from \Cref{charProp} sufficient number of times. Hence it is enough to define only the tier 1 (i.e. the values of $\hat{s}_0, \ldots, \hat{s}_{p^2-1}$ to construct the whole sequence.
+\begin{definition}\label{sm_good_def}
+Define $\{\hat{s}_j^{(1)}\}$ as in \Cref{tier1}. Let
+$$ \hat{s}_{pm+j} =
+ \begin{cases}
+     \hat{s}_{pm+j}^{(1)}, & m < p \\
+     \hat{s}_{p(p-1-s_m) + j}, & m \ge p
+ \end{cases}
+$$
+\end{definition}
+
+We will use this definition further.
+
+\subsection{Recurrent formulae for degrees}
+\begin{definition}
+Let $m \ge 0$. We define $d_m^p := \mathrm{deg}\ P_m^p$.
+\end{definition}
+\begin{proposition} \label{dm_eq}
+For any $m \ge 0,\ 0 < k < p$:
+\begin{align*}
+  d_{pm}^p &= m \Delta_{p-2} + d_m^p \\
+  d_{pm+k}^p &= m \Delta_{p-2}+(p-k)(k-1)+\Delta_{k-2}+d_m^p + \mathrm{max}\{p-k-1, d_{m+1}^p-d_m^p\}
+\end{align*}
+\end{proposition}
+\begin{proof}
+Directly from the (\ref{P_pm}) and (\ref{P_pm+k}) we obtain the equations for degrees:
+\begin{align*}
+  d_{pm}^p &= m \Delta_{p-2} + d_m^p \\
+  d_{pm+k}^p &= \mathrm{max}\{ m\Delta_{p-2} + \Delta_{k-1} + k(p-k-1) + d_m^p,\     
+                                m\Delta_{p-2} + \Delta_{k-2} + (p-k)(k-1) + d_{m+1}^p \}
+\end{align*}
+To show this proposition, it is enough to take the common terms out of the maximum operator.
+\end{proof}
+The following holds for aribtary fixed $p \ge 3$. Keeping this in mind, we use $d_j$ instead of $d_j^p$ for short.
+\begin{definition} \label{sm_def}
+For any $m \ge 0$, we define $s_m := d_{m+1}^p - d_m^p $.
+\end{definition}
+Our goal is to show that this sequence $\{s_m\}_{m \ge 0}$ is equal to $\{\hat{s}_m\}$ defined in the previous Subsection. First, we deduce recurrent equations on $s_m$.
+\begin{proposition}
+\begin{equation} \label{sm_eq}
+s_{pm+k} = p-k-1 - \mathbbm{1}\{s_m < p-1-k\}
+\end{equation}
+\end{proposition}
+\begin{proof}
+We will show this using \Cref{dm_eq} and \Cref{sm_def}. If we try to evaluate $s_j$, it collapses into two cases:
+\begin{itemize}
+\item Let $k<p-1 $. $$s_{pm+k} = d_{pm+k+1}-d_{pm+k} =$$ $$= m\Delta_{p-2} + (p-k-1)k + \Delta_{k-1} + d_m + \max\{p-k-1, d_{m+1}-d_m\} - $$ $$ - m\Delta_{p-2}-(p-k)(k-1)-\Delta_{k-2}-d_m-\max\{p-k,d_{m+1}-d_m\}=$$ $$ =p-k-1+\max\{p-k-1, d_{m+1}-d_m\}-\max\{p-k,d_{m+1}-d_m\};$$
+We substitute $d_{m+1}-d_m = s_m$ and observe that $$\max\{p-k-1, d_{m+1}-d_m\}-\max\{p-k,d_{m+1}-d_m\}= \mathbbm{1}\{s_m < 1-k\}.$$ This subsitution leads to exaclty the equation in the proposition.
+\item $s_{pm+p-1} = d_{p(m+1)}-d_{pm+3} = \\=(m+1)\Delta_{p-2}+d_{m+1}-m\Delta_{p-2}-(p-(p-1))(p-1-1)-\Delta_{p-1-2}-d_m-\max\{0, d_{m+1}-d_m\}=\\=\Delta_{p-2}+(d_{m+1}-d_m)-(p-2)-\Delta_{p-3}-(d_{m+1}-d_m)=0$
+\end{itemize}
+
+A straightforward substitution shows that the second case is governed by the same equation.
+\end{proof}
+
+\begin{lemma}\label{sm1}
+For $j = 0, 1, \ldots, p^2-1:\ s_j=\hat{s}_j^{(1)}$
+\end{lemma}
+\begin{proof}
+We compute the initial $p^2$ terms of this sequence. Recall that $P_0^p(t)=1,\ P_1^p(t) = \frac{1}{p-1} \sum\limits_{j=0}^{p-2} t^j$, hence $d_0 = 0,\ d_1 = p-2$ and $s_0 = p-2$. We will use this as the initial condition in the recurrent equation from (\ref{sm_eq}).
+Observe the equation (\ref{sm_eq}). The right part consists of a periodic term $p-k-1$ with period $p$ and the step function $-\mathbbm{1}\{s_m < p-1-k\}$ which is determined by the number of period. Thus we evaluate the sequence $\{s_j\}$ period-wise.
+
+In the first period, $\{s_{0p+k}\}$, we have already shown $s_0=p-2$. The step function is $-\mathbbm{1}\{k < 1\}$, so it affects none of the terms $s_1, \ldots, s_{p-1}$. They form the descending progression $p-2, p-3, \ldots, 1, 0$. Now we have the first $p$ terms of $\{s_j\}$ which are to be used to obtain the subsequent terms.
+
+In the second period, the step function is $-\mathbbm{1}\{s_1 < p-1-k\}$. We know that $s_1=2$, thus the second period repeats the first. In the third period we have $-\mathbbm{1}\{s_1 < p-1-k\}=-\mathbbm{1}\{p-3 < p-1-k\} = -\mathbbm{1}\{k < 2\}$ which affects first two terms. The third period is $p-2,p-3,p-3,p-4, \ldots, 1, 0$.
+
+Similarly, we use all of the terms in the first period to evaluate each of $s_j$ for $j < p^2$. 
+It is shown with ease that they the same as in $\hat{s}_j^{(1)}$
+\end{proof}
+
+\begin{proposition} \label{sm_estimate}
+$\forall j \ge 0:\ s_j \in \{0, 1, \ldots, p-2\}$
+\end{proposition}
+\begin{proof}
+The explicit evaluation of $s_0, s_1, \ldots, s_{p-1}$ shows 
+\begin{equation}\label{subset}
+\{0,1,\ldots,p-2\} \subset \mathrm{Ran\ } \{s_j\}
+\end{equation}
+
+Obviously, $s_j \ge 0$.
+We prove by induction that $\forall m \ge p,\ 0 < k < p-1:\ s_{pm+k} < p-1$. The order $\log_p m =: u $ is the parameter of induction. The explicit evaluation of $s_p, s_{p+1}, \ldots, s_{p^2-1}$ shows the base of induction. Let the statement be true for an arbitary $u$. When computing the values of $s_j$ for order $u+1$ from (\ref{sm_eq}), we refer to the values of $s_m$ of order $u$. In (\ref{sm_eq}), $p-k-1 \le p-1$ and $- \mathbbm{1}\{s_m < p-1-k\} \le 0$, thus $s_j \le p-1$. Let us show that the equality is never reached. Indeed, $p-k-1 = p-1$ if true only for $k=0$. When we substitute $k=0$ into the step function, we get $- \mathbbm{1}\{s_m < p-1\}$. For $s_m$ of order $u$, the statement in brackets is true due to the induction hypothesis. So, in order $u+1$ the statement $s_j < p-1$ holds. The inductive step is now shown.
+
+Now we may assert $\mathrm{Ran}\ \{s_j\} \subset \{0,1,\ldots,p-2\}$. Bringing together this and (\ref{subset}), we infer the proposition.
+\end{proof}
+\begin{lemma} \label{sm2}
+For each $m \ge p,\ 0 < k < p-1:\ s_{pm+k}=s_{p(p-1-s_m)+k}$
+\end{lemma}
+\begin{proof}
+First, we observe that for any $j \ge 0$, $s_j = s_{p-1 - s_j}$. Using the \Cref{sm_estimate}, it is enough to show the statement for $s_j=0,1,\ldots,p-2$. For example, let $s_j=0$. We make sure that $0 = s_{p-1}$ which we know from the direct computation. Similarly, we do this for any $s_j=1,\ldots,p-2$.
+
+To prove the lemma, we will this equation. Let $m \ge p,\ 0 < k < p-1$. From (\ref{sm_eq}) we obtain $s_{pm+k}=p-k-1 - \mathbbm{1}\{s_m < p-1-k\}$ and $s_{p(p-1-s_m)+k}= p-k-1 - \mathbbm{1}\{s_{p-1-s_m} < p-1-k\}$. One may easily observe that the equality $s_m=p-1-s_m$ turns this into an identity.
+\end{proof}
+\begin{theorem}
+For each $j \ge 0$: $s_j=\hat{s}_j$.
+\end{theorem}
+\begin{proof}
+The results of \Cref{sm1} and \Cref{sm2} show that \Cref{sm_good_def} is true for $\{s_j\}_{j \ge 0}$.
+\end{proof}
+\begin{corollary}
+$d_m = \sum\limits_{j=0}^{m-1} \hat{s}_j$
+\end{corollary}
 \end{document}
