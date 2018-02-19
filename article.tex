@@ -79,16 +79,22 @@
 
 \begin{document}
 \section{Basic definitions}
-$\Gamma := \mathbb{Z}_p = \left\{x = \left(x_0, x_1, x_2, \ldots \right), x_k \in \{0, 1, \ldots, p - 1\} \right\}$
+\subsection{The polynomials $P_m^p$ in the p-adic group}
+Let $p \ge 3$ be an arbitary integer.
+Consider the compact group of $p$-adic numbers
+$$\Gamma := \mathbb{Z}_p = \left\{x = \left(x_0, x_1, x_2, \ldots \right), x_k \in \{0, 1, \ldots, p - 1\} \right\}$$
+We will also use the set
+$$\Gamma' := \Gamma \setminus \{(p-1,p-1,\ldots)\},$$
+where each element has only a finite number of leading elements equal to $(p-1)$.
 
-$\Gamma' := \Gamma \setminus \{(p-1,p-1,\ldots)\}$
+We denote by $\lambda$ the Haar measure on $\Gamma$: Under $\lambda$, the coordinates $x_k$ are i.i.d., uniformly distributed in $\{0, 1, \ldots, p - 1\}$.
 
-$\lambda$ is the Haar measure on $\Gamma$.
-
-    We define two $\lambda$-preserving transformations on $\Gamma$:
+    We define two $\lambda$-preserving transformations on $\Gamma'$:
     \begin{itemize}
-    \item $\sigma:\ x=\left(x_0, x_1, x_2, \ldots \right) \mapsto \sigma x = \left(x_1, x_2, \ldots \right)$
-    \item $S:\ x \mapsto x + 1$, where $1:=(1,0,0,\ldots)$
+    \item The shift-map $\sigma:\ x=\left(x_0, x_1, x_2, \ldots \right) \mapsto \sigma x = \left(x_1, x_2, \ldots \right)$
+    \item The adding-machine transformation $S:\ x \mapsto x + 1$, where $1:=(1,0,0,\ldots) \in \Gamma'$. (In general, each integer j is
+identified with an element of $\Gamma'$, so that $S^jx = x + j$ for all $j \in Z$ and all
+$x \in \Gamma'$.)
     \end{itemize}
     Let $\phi: \Gamma' \rightarrow \mathbb{Z}$ be the <<first not $(p-1)$>> functional:\\
     \[\phi(x):=x_i\text{ if }x=(p-1, \ldots, p-1, x_i, x_{i+1}, \ldots)\]
@@ -98,8 +104,41 @@ Let us define $\pi_m$ as the probability distribution of $\phi^{(m)}$ on $\mathb
     \[\pi_m(j) = \lambda(\phi^{(m)}=j)\]
     We consider the sequences of polynomials $P_m^p$ produced by $\pi_m$ for fixed $p$ and $m$:
     \[P_m^p(t):= \mathbb{E}_\lambda\left[ t^{\phi^{(m)}(x)}\right] = \sum\limits_{j=0}^m \pi_m(j) t^j \]
+    
+\subsection{Integral automorphisms over the p-adic odometer}
+Fix an arbitary $p \ge 3$. Let $\{h_n\}_{n \ge 0}$ be the sequence of heights: $h_0 := 1,\ h_n = ph_{n-1}+1$.
+
+For each $n \ge 0$, we define
+
+$$X_n:=\{(x,i): x \in \Gamma',\ 0 \le i \le h_{n-1} + \phi(x)\}$$
+We consider the transformation $T_n$ of $X_n$, defined by
+$$T_n(x, i) := \begin{cases}
+(x,i+1), & \text{ if } i+1 \le h_n - 1 + \phi(x) \\
+(Sx,0), & \text{ if } i=h_n-1+\phi(x). \end{cases}$$
+
+Let us introduce the map $\psi_n : X_n \mapsto X_n+1$ defined by
+$$\psi_n(x,i):=(\sigma x, x_0 h_n + i + \mathbbm{1}\{x_0=p-1\}).$$
+Observe that $\psi_n$ is bijective. Moreover, it conjugates the transformations $T_n$ and
+$T_{n+1}$. We consider the probability measure $\mu_n$ on $X_n$: For a fixed $i$ and a set
+$A \subset \{(x, i), x\in\Gamma' \}$,
+$$\mu_n(A):=\frac{1}{h_n + 1/2} \lambda (\{x \in \Gamma', (x, i) \in A\}).$$
+
+The transformation $T_n$ preserves $\mu_n$ and the map $\psi_n$ sends $\mu_n$ to $\mu_{n+1}$. It follows that all the measure-preserving dynamical systems $(X_n, T_n, \mu_n)$ are isomorphic.
+
+For $ 0 \le i \le h_{n-1}$, we set
+$E_{n,i} := \{(x, i) : x \in \Gamma'\} \subset X_n$. We have $E_{n,i} = T^i_n E_{n,0}$, hence
+ $$\{E_{n,0},\ldots,E_{n,h_n-1}\}$$
+is a Rokhlin tower of height $h_n$ for $T_n$. Moreover, for any $n \ge 0$, and any $0 \le i \le
+h_n-1$,
+$$\psi_n(En,i) = E_{n+1,i} \sqcup E_{n+1,h_n+i} \sqcup E_{n+1,2h_n+i+1}.$$
+Fix $n_0$. By composition of the isomorphisms $(\psi_n)$, we can view all these Rokhlin
+towers inside $X_{n_0}$. The above formula shows that the towers are embedded in the
+same way as the towers of Chacon’s automorphism. In case $p=3$, it literally defines the Chacon's automorphism: $(X_{n_0} , \mu_{n_0} , T_{n0})$ is isomorphic to $(X,\mu,T)$. For an arbitary $p > 3$, it generates a similar dynamical system which we call the \emph{generalized Chacon automorphism}. In this paper we dicsuss the properties of the generalized automorphism and infer how the known properties of the classical Chacon's automorphism change in the general case.
+
 \section{Palindromic property}
-Let $p \ge 3$ be an \textit{odd} number.
+In this section, we are going to prove that, just like in the classical case, the polynomials $P_m^p$ are palindromic for any parameter $p$. Moreover, we generalize the definition of $\phi$ functional and describe the class of Chacon-like functionals which produce palindromic polynomials.
+
+Let $p \ge 3$ be an arbitary integer.
 
 We can generalize the definition of $\phi$ functional:
 \begin{definition}
@@ -122,32 +161,38 @@ $$
     Let us find the sufficient conditions for $\phi$ to have the palindromic property.
     
 \begin{definition}
-We call a function $\omega$  \textit{binary-antipalindromic} iff
+We call a function $\omega$  \textit{antipalindromic} iff
 \[\begin{cases}
-	\mathrm{Ran }\ \omega = \{0,1\} \\
-	\forall j,\ 0 \le j \le p-2: \  \omega(j) = 1 - \omega(p-2-j)
+	\mathrm{Ran }\ \omega = \{0,1, \ldots, \zeta\} \\
+	\forall j,\ 0 \le j \le p-2: \  \omega(j) = \zeta - \omega(p-2-j)
 \end{cases}\]
 \end{definition}
 
+\begin{notation}
+We further use $[M, N]$ instead of $\{M,M+1, \ldots, N\}$.
+\end{notation}
+
+Note that given $\omega$ such that $\mathrm{Ran}\ \omega = [0,\zeta]$, we have $\mathrm{Ran}\ \phi = [0,\zeta]$ and $\mathrm{Ran}\ \phi^{(m)} = [0,m\zeta]$
 
 \begin{example}
-The usual $\omega(j)=j$ is binary-antipalindromic for $p = 3$. Indeed,
+The usual $\omega(j)=j$ is antipalindromic for $p = 3$. Indeed,
 $$
 \omega(0) = 0 = 1 - \omega(1) = 1 - \omega(3 - 2 - 0)
 $$
 $$
 \omega(1) = 1 = 1 - \omega(0) = 1 - \omega(3 - 2 - 1)
 $$
+In the same way it is shown that $\omega(j)=j$ is antipalindromic for any $p \ge 3$.
 \end{example}
 
 \begin{theorem}
-If $\omega$ is binary-antipalindromic, the corresponding $\phi$ has the palindromic property.
+If $\omega$ is antipalindromic, the corresponding $\phi$ has the palindromic property.
 \end{theorem}
 
-We will need the following lemmas to prove the theorem. (Note that the lemmas generalize Lemma 3.1 and Lemma 3.2 from the article "Weak limits of powers of Chacon's automorphism"\ )
+We will need the following lemma to prove the theorem.
 
-\begin{lemma} \label{binDistLemma}
-If $\omega$ is binary-antipalindromic, the probability distributions of the random sequences $\{\phi(S^j x)\}_{j \ge 0}$ and $\{ 1 - \phi(S^{-j} x)\}_{j \ge 0}$ are the same.
+\begin{lemma}  \label{distLemma}
+If $\omega$ is antipalindromic, the probability distributions of the random sequences $\{\phi(S^j x)\}_{j \ge 0}$ and $\{ \zeta - \phi(S^{-j} x)\}_{j \ge 0}$ are the same.
 \end{lemma}
 \begin{proof}
 Let $x \in \Gamma \setminus \{(p-1,p-1,\ldots)\}$. We
@@ -157,53 +202,30 @@ $(\ldots, 0, 1, 2, \ldots,p-2, p-1, 0, 1, 2, \ldots,p-2, p-1, \ldots)$, the cont
 $\{\phi(S^j x)\}_{j \ge 0}$ provides a sequence of blocks $\omega(0),\omega(1),\ldots, \omega(p-2)$ separated by one symbol
 given by a point of higher order. To fill in the missing symbols corresponding to positions $j$ 
 such that $\mathrm{order}(x+j) \ge 1$, we observe that, if $x$ starts with a $p-1$, then for all $j \ge 0$, $\phi(x+pj)=\phi(\sigma x + j)$. Hence the missing symbols are given by the symbols $\{\phi(S^j \sigma x)\}_{j \ge 0}$.\\
-Let us observe an example for $p=7$ produced by the Legendre symbol-like $\omega(x)=((\frac{x+1}{7}) + 1)/2$ (which is binary-antipalindromic due to the Quadratic reciprocity):\bigskip\\
+Let us observe an example for $p=7$ produced by the Legendre symbol-like $\omega(x)=((\frac{x+1}{7}) + 1)/2$ (which is antipalindromic due to the Quadratic reciprocity):\bigskip\\
 $\begin{array}{cccccccccccccccccccccccccccl}
 1 & 1 & 0 & 1 & 0 & 0 & . & 1 & 1 & 0 & 1 & 0 & 0 &. & 1 & 1 & 0 & 1 & 0 & 0 & . & 1 & 1 & 0 & 1 & 0 & 0 &\leftarrow \text{contribution of order }0 \\
   &   &   &   &   &   & 1 &   &   &   &   &   &   &1 &   &   &   &   &   &   & 0 &   &   &   &   &   &   &\leftarrow \text{contribution of order }1 \\
 1 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 &\leftarrow \text{the whole sequence} \\
 \end{array}$
 \bigskip\\
-We may build $\{ 1 - \phi(S^{-j} x)\}_{j \ge 0}$ from $\{\phi(S^j x)\}_{j \ge 0}$ with a composition of two measure-preserving transformations:
+We may build $\{ \zeta - \phi(S^{-j} x)\}_{j \ge 0}$ from $\{\phi(S^j x)\}_{j \ge 0}$ with a composition of two measure-preserving transformations:
 \begin{enumerate}
 \item The 'reverse' transformation  $\{a_j\}_{j \ge 0} \mapsto \{a_{-j}\}_{j \ge 0}$ 
-\item The 'flip' transformation which substitutes each element $k \in \{b_j\}_{j \ge 0}$ with $1-k$, turning the sequence into $\{ 1 - b_j\}_{j \ge 0}$ .
+\item The 'flip' transformation which substitutes each element $k \in \{b_j\}_{j \ge 0}$ with $\zeta-k$, turning the sequence into $\{ \zeta - b_j\}_{j \ge 0}$ .
 \end{enumerate}
-By the definition of binary-antipalindromic, it is clear that this procedure works as identity transformation when applied to $\{\phi(S^j x)\}_{j \ge 0}$.
-\end{proof}
-\begin{lemma}
-If $\{\phi(S^j x)\}_{j \ge 0} \overset{d}{=} \{ 1 - \phi(S^{-j} x)\}_{j \ge 0}$, then for any $0 \le j \le m:\ \pi_m(j)=\pi_m(m-j)$
-\end{lemma}
-\begin{proof}
-The coefficient $\pi_m(m-j)$ is equal to the probability to see $(m-j)$ digits equal to 1 in the $m$ consecutive terms in $\{\phi(S^j x)\}_{j \ge 0}$. Thus, $\pi_m(m-j)$ is also equal to the probability to see $j$ digits equal to $0$ in the $m$ consecutive terms. Using \Cref{binDistLemma}, we conclude the statement of this lemma.\\
+By the definition of antipalindromic functions, it is clear that this procedure works as identity transformation when applied to $\{\phi(S^j x)\}_{j \ge 0}$.
 \end{proof}
 
-To prove the theroem, it is now enough to notice that in Definition 1 for $\phi$ produced by binary-antipalindromic $\omega$ we may substitute $\phi_\star = 0, \phi^\star = 1, \zeta=1$ and hence the palindromic properly is equivalent to $\forall j, 0 \le j \le m:\ \pi_m(j)=\pi_m(m-j)$.
+To prove the theorem, it is now enough to notice that in Definition 1 for $\phi$ produced by binary-antipalindromic $\omega$ we may substitute $\phi_\star = 0, \phi^\star = 1, \zeta=1$ and hence the palindromic properly is equivalent to $\forall j, 0 \le j \le m:\ \pi_m(j)=\pi_m(m-j)$.
 This summarizes the consideration of $\omega$ functions with $\mathrm{Ran }\ \omega = \{0,1\} $. Let us skip to the general construction.
 
-\begin{definition}
-We call a function $\omega$  \textit{antipalindromic} iff
-\[\begin{cases}
-	\mathrm{Ran }\ \omega = \{0,1, \ldots, \zeta\} \\
-	\forall j,\ 0 \le j \le p-2: \  \omega(j) = \zeta - \omega(p-2-j)
-\end{cases}\]
-\end{definition}
 
-
-\begin{notation}
-We further use $[M, N]$ instead of $\{M,M+1, \ldots, N\}$ for shortness.
-\end{notation}
-Note that given $\omega$ such that $\mathrm{Ran}\ \omega = [0,\zeta]$, we have $\mathrm{Ran}\ \phi = [0,\zeta]$ and $\mathrm{Ran}\ \phi^{(m)} = [0,m\zeta]$
-
-\begin{lemma} \label{distLemma}
-If $\omega$ is antipalindromic, the probability distributions of the random sequences $\{\phi(S^j x)\}_{j \ge 0}$ and $\{ \zeta - \phi(S^{-j} x)\}_{j \ge 0}$ are the same.
-\end{lemma}
-This lemma is shown similarly to the \Cref{binDistLemma}.\bigskip \\
-The following theorem generalizes Theorem 1.
-\begin{theorem}
+\begin{theorem}\label{pal_th}
 If $\omega$ is antipalindromic, the corresponding $\phi$ has the palindromic property.
 \end{theorem}
-\begin{proof} In Definition 1, we may substitute $\phi_\star = 0, \phi^\star = \delta = \zeta$. Hence it is enough to show that \[\forall j,\ 0 \le j \le m\zeta: \pi_m(j) = \pi_m(m \zeta - j).\]
+\begin{proof}
+In Definition 1, we may substitute $\phi_\star = 0, \phi^\star = \delta = \zeta$. Hence it is enough to show that \[\forall j,\ 0 \le j \le m\zeta: \pi_m(j) = \pi_m(m \zeta - j).\]
 $\pi_m(m \zeta - j) = \lambda(\phi^{(m)}(x)=m\zeta-j)=
 \\=\sum\limits_{(\phi_1, \ldots, \phi_m)} \lambda\big(\phi(x)=\phi_1, \phi^{(2)}(x) = \phi_2, \ldots, \phi^{(m)}(x)=\phi_m\big) \mathbb{I} (\phi_1 + \ldots + \phi_k = m\zeta - j) = 
 \\ = \sum\limits_{(\phi_1, \ldots, \phi_m)} \lambda\big(\phi(x)=\phi_1, \phi^{(2)}(x) = \phi_2, \ldots, \phi^{(m)}(x)=\phi_m\big) \mathbb{I} \big((\zeta-\phi_1) + \ldots + (\zeta-\phi_m) = j\big)$\\
@@ -220,18 +242,28 @@ $\phi'(x) = \begin{cases}
                 \end{cases}$ is antipalindromic.
 \end{lemma}
 \begin{proof}
-Let $\pi_m'(j) = \lambda(\phi'^{(m)}(x)=j)$. In terms of Definition 1, $\phi_\star = b, \phi^\star = a\zeta + b, \delta = a\zeta$. Let us prove that $\pi_m'(mb + j) = \pi_m' (m(a\zeta+b)-j)$.\\
+Let $\pi_m'(j) = \lambda(\phi'^{(m)}(x)=j)$. In terms of Definition 1, $\phi_\star = b, \phi^\star = a\zeta + b, \delta = a\zeta$. Let us prove that $\pi_m'(mb + j) = \pi_m' (m(a\zeta+b)-j)$.
+
 First, we perform the division with remainder: $j = qa + r$. It follows from the construction of $\phi'$ that $\pi_m'(mb + qa + r) = 0$ if $r \ne 0$. Yet, $m(a\zeta+b)-j = m(a\zeta+b)-qa - r = mb + (m\zeta -q)a - r$ and hence $\pi_m' (m(a\zeta+b)-j) = 0$ if $r \ne 0$.\\
 Thus, it remains to prove that $\pi_m'(mb + qa) = \pi_m' (m(a\zeta+b)-qa)$.
-Note that we may restore the values of $\phi$ produced by $\omega$ from the values of $\phi'$. Indeed, consider the bijection $i: \{b, a + b, 2a + b \ldots, a\zeta + b\} \rightarrow [0, \zeta]$ such that $i(j) = \frac{j-b}{a}$. It's easy to see that $i(\phi'(x))=\phi(x)$. Subsequently, we may define $i^{(m)}(j) = \frac{j-mb}{m}$ and conclude $i^{(m)}(\phi'^{(m)}(x))=\phi(x)$.\\
-Now let us prove $\pi_m'(mb + qa) = \pi_m' (m(a\zeta+b)-qa)$ using the fact that $i^{(m)}$ is bijective.\\
+Note that we may restore the values of $\phi$ produced by $\omega$ from the values of $\phi'$. Indeed, consider the bijection $i: \{b, a + b, 2a + b \ldots, a\zeta + b\} \rightarrow [0, \zeta]$ such that $i(j) = \frac{j-b}{a}$. It's easy to see that $i(\phi'(x))=\phi(x)$. Subsequently, we may define $i^{(m)}(j) = \frac{j-mb}{m}$ and conclude $i^{(m)}(\phi'^{(m)}(x))=\phi(x)$.
+
+Now let us prove $\pi_m'(mb + qa) = \pi_m' (m(a\zeta+b)-qa)$ using the fact that $i^{(m)}$ is bijective.
+
 \[\pi_m'(mb + qa) = \lambda(\phi'^{(m)}(x)=mb + qa) = \lambda\big(i^{(m)}(\phi'^{(m)}(x))=i^{(m)}(mb + qa)\big)  =\]\[= \lambda(\phi^{(m)}(x)= \frac{mb-qa-mb}{m})= \lambda(\phi^{(m)}(x)= q)=\pi_m(q)\]
 Similarly, $\pi_m' (m(a\zeta+b)-qa) = \pi_m(m\zeta - q)$. Since $\omega$ is antipalindromic, it follows from Theorem 2 that $\pi_m(q) = \pi_m(m \zeta - q)$ and then $\pi_m'(mb + qa) = \pi_m' (m(a\zeta+b)-qa)$.
 \end{proof}
 \begin{proposition}[On inheritance of polindromic property]
 Let $\phi$ have the polindromic property, and let there be $\phi'$ such that for any $m \in \mathbb{N}$ there exists bijection $i^{(m)}: \mathrm{Ran}\ \phi'^{(m)} \rightarrow \mathrm {Ran}\ \phi^{(m)}$. Then $\phi'$ has the polindromic property.
 \end{proposition}
-The proof of this must be the same as for \Cref{affineLemma}.
+The proof of this is the same as for \Cref{affineLemma}.
+
+\begin{theorem}
+The polynomials $P_m^p$ produced by the generalized Chacon automorphism have the palindromic property for any $p \ge 3$.
+\end{theorem}
+\begin{proof}
+We have already shown that $\omega(j)=j$ is antipalindromic. Hence this theorem is a direct corollary of  \Cref{pal_th}.
+\end{proof}
 
 \section{Recurrence formulae for linear $\omega$}
 \begin{notation} We denote $n$th triangle number $\frac{n(n+1)}{2}$ as $\Delta_n$ \end{notation}
