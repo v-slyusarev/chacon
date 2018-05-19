@@ -1,0 +1,317 @@
+%\usepackage{extsizes}
+\documentclass[14pt, a4paper, russian]{report}
+
+\linespread{1.3}
+
+
+\usepackage[centertags]{amsmath}
+\usepackage{amsthm,amsfonts,amssymb}
+\usepackage{indentfirst}
+
+\usepackage{extsizes}
+\usepackage[left=25mm,right=10mm,top=20mm,bottom=20mm,bindingoffset=0cm]{geometry}
+
+\usepackage{cmap}
+
+
+% \usepackage{jmlda}
+% \usepackage{amsmath}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+%\usepackage{pscyr}
+\RequirePackage{graphicx}
+\RequirePackage{subfig}
+\RequirePackage{epstopdf}   % for Mikhail Burmistrov burmisha@gmail.com
+\RequirePackage{tikz}       % for Mikhail Burmistrov burmisha@gmail.com
+\RequirePackage{pgfplots}
+\usepackage{thmtools}   
+\usepackage{hyperref}
+\usepackage[nameinlink]{cleveref}
+
+
+\newtheorem{lemma}{\indent Лемма}
+\newtheorem{theorem}{\indent Теорема}
+\newtheorem{problem}{\indent Задача}
+\newtheorem{remark}{\indent Замечание}
+\newtheorem{definition}{\indent Определение}
+\newtheorem{proposition}{\indent Утверждение}
+\newtheorem*{example}{\indent Пример}
+\newtheorem*{notation}{\indent Обозначение}
+
+\newcommand{\order}[2]{#1_{(#2)}}
+
+\newcommand{\T}{^{\text{\tiny\sffamily\upshape\mdseries T}}}
+
+
+\def\XYtext(#1,#2)#3{\rlap{\kern#1\lower-#2\hbox{#3}}}
+
+% Переопределение вставки графики
+\newcounter{PictureNo}
+
+\hyphenpenalty 100
+\tolerance 10000
+
+
+\newenvironment{Proof}%
+    {\par\noindent{\bf Доказательство.}}%
+    {\hfill$\scriptstyle\blacksquare$}
+
+\bibliographystyle{unsrt}
+
+
+\begin{document}
+\begin{center}
+\hfill \break
+\footnotesize{Федеральное государственное автономное образовательное учреждение 
+высшего образования}\\ 
+\small{\textbf{<<Московский физико-технический институт (государственный университет)>>}}\\
+\hfill \break
+\normalsize{Факультет инноваций и высоких технологий}\\
+\normalsize{Кафедра дискретной математики}\\
+\end{center}
+\footnotesize{\textbf{Направление подготовки:} 03.03.01 Прикладные математика и физика}\\
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\begin{center}
+\large{\textbf{Комбинаторные свойства обобщённых автоморфизмов Шакона}}\\
+\normalsize{Бакалаврская работа}\\
+\hfill \break
+\hfill \break
+\end{center}
+ 
+\hfill \break
+ 
+\begin{flushright}
+\footnotesize{ 
+\begin{tabular}{rl}
+\textbf{Обучающийся:} & Слюсарев Владислав Владимирович \\
+ & \underline{\hspace{3cm}} \\\\
+\textbf{Научный руководитель:} & к. ф.-м. н., старший преподаватель\\
+            & А. А. Приходько \\
+ & \underline{\hspace{3cm}} \\\\
+\end{tabular}
+}
+\end{flushright}
+
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\hfill \break
+\begin{center} Москва 2018 \end{center}
+\thispagestyle{empty} % выключаем отображение номера для этой страницы
+ 
+% КОНЕЦ ТИТУЛЬНОГО ЛИСТА
+ 
+\newpage
+
+\tableofcontents
+%\linenumbers
+\chapter*{Введение}
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam mauris eros, venenatis id nisi ac, scelerisque dapibus metus. Aliquam scelerisque vulputate justo. Nunc ut commodo mauris. Etiam scelerisque sapien ac nisl euismod auctor. Sed eu commodo tortor, nec aliquam nulla. Nullam convallis, tellus sit amet porttitor vestibulum, orci metus sollicitudin mauris, at eleifend erat arcu et mauris. Donec vel tincidunt massa. Sed et consectetur neque. Integer libero eros, accumsan id congue ac, facilisis eu purus. Suspendisse potenti. Nullam blandit quis erat tempor ullamcorper. Suspendisse consequat condimentum turpis, et tempor lectus vulputate sed.
+
+Nam in enim vel tortor congue cursus ac nec felis. Sed commodo arcu lorem, id gravida erat pulvinar id. Praesent maximus nisi ac ipsum malesuada tempus. Aliquam pellentesque in mi eu sagittis. Curabitur vitae quam risus. Ut sed erat auctor, pellentesque nulla eu, aliquam massa. Nunc laoreet enim velit, ut gravida odio tempus eget. Morbi nec congue libero, tincidunt vestibulum urna. Nulla sed lacus id arcu accumsan interdum. Suspendisse ut pharetra sem.
+
+Aliquam erat volutpat. Etiam nec egestas velit. Curabitur eu metus ultricies magna cursus maximus. Proin nec eleifend ipsum. Nunc pulvinar nulla nisl, id finibus nunc faucibus eu. Cras libero magna, viverra eget eros non, fermentum tincidunt justo. Curabitur rhoncus felis lectus, ut tempus lectus congue at.
+
+Sed tristique mauris a auctor egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce accumsan aliquam porttitor. Fusce aliquam ante eu leo porttitor, vitae interdum dolor laoreet. Donec eget volutpat odio. Curabitur non massa tellus. Nullam in viverra mi, in hendrerit augue. Aenean vehicula dignissim elit, et condimentum mi facilisis eget. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis fermentum libero quis dapibus luctus. Sed eleifend ullamcorper sem, a tempor nunc consectetur eget. Curabitur ultrices posuere mollis. Donec iaculis leo id neque placerat, nec gravida sem venenatis. Nam elit augue, tristique vel rhoncus quis, aliquet dictum quam.
+
+Aliquam risus sem, interdum vitae sodales sit amet, sollicitudin ut dui. Vivamus ut nisi congue, ultricies ante id, vehicula metus. Morbi eu sem id metus tincidunt tincidunt quis non libero. Vivamus at diam quis felis ullamcorper suscipit ac id turpis. In egestas id velit sit amet maximus. Sed a laoreet ligula, rhoncus ultrices dui. Integer nunc est, bibendum a consectetur eu, condimentum sit amet leo. Nulla facilisi. Nulla a ex ac mauris ultricies fermentum quis non tellus. Quisque lacinia sapien ac dui semper rutrum vitae ac velit. 
+
+\newpage
+
+\chapter{Основные определения}
+
+\section{Основные обозначения и определения}
+
+Пусть $p \ge 3$ --- произвольное натуральное число. Рассмотрим аддитивную группу вычетов $\mathbb{Z}_p$. 
+
+\begin{definition}
+Пространством $\Gamma$ назовём множество бесконечных последовательностей элементов из $\mathbb{Z}_p$:
+$$\Gamma := \left\{x = \left(x_0, x_1, x_2, \ldots \right), x_k \in \{0, 1, \ldots, p - 1\} \right\}$$
+Элементы $x_0, x_1, x_2, \ldots$ будем называть координатами элемента $x$.
+\end{definition}
+Далее мы также будем использовать множество 
+$$\Gamma' := \Gamma \setminus \{(p-1,p-1,\ldots)\},$$
+в котором каждая последовательность имеет в начале лишь конечное число элементов, равных $(p-1)$.
+
+Отметим, что $\Gamma$ с операцией покоординатного сложения является компактной группой. Пусть $\lambda$ --- мера Хаара на группе $\Gamma$. Эта мера позволяет задать вероятностное пространство $(\Gamma, 2^\Gamma, \lambda)$.
+
+\begin{notation} 
+Множество $\{a, a+1, \ldots, b-1, b\} \subset \mathbb{N}$ будем называть отрезком и обозначать $\left[a, b\right]$. Учитывая естественное вложение $\mathbb{Z}_p$ в $\mathbb{N}$, мы будем использовать то же обозначение для соответствующего подмножества $\mathbb{Z}_p$, не оговаривая это особо в тех случаях, когда смысл данного обозначения читается однозначно.
+\end{notation}
+
+Относительно меры $\lambda$ все координаты $x_k, k \ge 0,$ являются независимыми одинаково распределёнными случайными величинами, имеющими дискретное равномерное распределение на множестве $\left[0, p-1\right]$. 
+
+\begin{definition} Определим два преобразования, действующих на пространстве $\Gamma$ и сохраняющих меру $\lambda$:
+\begin{itemize}
+\item Преобразование сдвига на одну позицию влево $\sigma$: $x=\left(x_0, x_1, x_2, \ldots \right) \mapsto \sigma x = \left(x_1, x_2, \ldots \right)$
+\item Преобразование <<прибавления единицы>> $S$: $x \mapsto x + 1$, где $1:=(1,0,0,\ldots) \in \Gamma'$ и сложение выполняется по модулю $p$ <<в столбик>> с переносом вправо. 
+\end{itemize}
+\end{definition}
+\begin{example}
+Для иллюстрации действия этих преобразований зафиксируем $p=4$. 
+\begin{itemize}
+\item $\sigma (0,1,0,0,\ldots) = (1, 0, 0, \ldots)$
+\item $S(1,0,0,\ldots) = (2,0,0,\ldots)$
+\item $S(3,1,0,0,\ldots) = (0,2,0,0,\ldots)$
+\item $S(3,3,3,2,1,1,\ldots)=(0,0,0,3,1,1,\ldots)$
+\end{itemize}
+\end{example}
+
+Каждое целое число $j \ge 0$ можно отождествить с элементом множества $\Gamma'$: этот элемент получается при записи числа $j$ в системе счисления с основанием $p$ от младшего разряда к старшему с добавлением бесконечной последовательности нулей за последним знаком. Например, при $p=3$ мы отождествим число $42$ и элемент $(0,2,1,1,0,0,\ldots) \in \Gamma'$. Это обозначение согласовано с описанной выше операцией прибавления, так что мы можем говорить о прибавлении произвольного натурального числа к элементу $\Gamma'$: $S^j x = S(S(\ldots S(x)\ldots)) = x + j$ для любых $x \in \Gamma',\ j \ge 0$.
+
+\begin{definition}
+Определим функционал $\phi: \Gamma' \to \mathbb{Z}$, возвращающий первую отличную от $(p-1)$ координату своего аргумента:
+ \[\phi(x):=x_i\text{, если }x=(p-1, \ldots, p-1, x_i, x_{i+1}, \ldots)\]
+\end{definition}
+ Используя это определение, мы также определим семейство функционалов $\phi^{(m)}: \Gamma' \to \mathbb{Z},\ m \ge 0$:
+\begin{definition}
+    \[\phi^{(0)}(x):=0;\ \phi^{(m)}(x):=\phi(x)+\phi(Sx)+\ldots+\phi(S^{m-1}x)\]
+\end{definition}
+\begin{remark}
+В определнии этих функционалов вычеты из $\mathbb{Z}_p$ естественным образом отождествляются с целыми числами. Таким образом, в определении $\phi^{(m)}(x)$ сложение осуществляется в множестве целых чисел, а не в группе вычетов.
+\end{remark}
+Заметим, что $\phi^{(m)}(x)$ является случайной величиной относительно пространства $(\Gamma, 2^\Gamma, \lambda)$, принимающей значения в $\mathbb{Z}$. Одним из основных объектов, рассматриваемых в настоящей работе, является эта случайная величина и её распределение $\pi_m$.
+\begin{definition}
+Пусть $j \in \mathbb{Z}$, тогда $\pi_m(j)=\lambda(\phi^{m}(x)=j)$ --- функция вероятности случайной величины $phi^{(m)}$.
+\end{definition}
+
+При фиксированном $p$ распределения $\pi_m$ порождают семейство характеристических полиномов $P_m^p(t)$.
+
+\begin{definition}
+Зафиксируем натуральное число $p \ge 3$, тогда для любого целого $m \ge 0$ определим формальный полином $P_m^p(t):= \mathbb{E}_\lambda\left[ t^{\phi^{(m)}(x)}\right] = \sum\limits_{j=0}^m \pi_m(j) t^j$.
+\end{definition}
+
+Данные полиномы, рассматриваемые как семейство с параметром $m$ при фиксированном $p$, являются центральным предметом изучения в настоящей работе.
+
+\section{Обобщённый автоморфизм Шакона}
+
+Зафиксируем произвольное $p \ge 3$. Определим последовательность высот $\{h_n\}_{n \ge 0}$ при помощи рекуррентного соотношения:
+$$\begin{cases}
+h_0 = 1 \\
+h_n = ph_{n-1}+1,& n > 0
+\end{cases}$$
+
+Для каждого $n \ge 0$ определим пространство
+$$X_n:=\{(x,i): x \in \Gamma',\ 0 \le i \le h_{n-1} + \phi(x)\}$$
+
+Рассмотрим преобразование $T_n$ пространства $X_n$, определяемое по правилу
+$$T_n(x, i) := \begin{cases}
+(x,i+1), & \text{ если } i+1 \le h_n - 1 + \phi(x) \\
+(Sx,0), & \text{ если } i=h_n-1+\phi(x). \end{cases}$$
+
+Также определим биективное отображение $\psi_n : X_n \mapsto X_n+1$:
+$$\psi_n(x,i):=(\sigma x, x_0 h_n + i + \mathbb{1}\{x_0=p-1\})$$
+
+Отметим, что $\psi_n$ связывает преобразования $T_n$ и
+$T_{n+1}$.
+
+Введём вероятностную меру $\mu_n$ на пространстве $X_n$: для фиксированного $i$ и подмножества
+$A \subset \{(x, i), x\in\Gamma' \}$ положим
+$$\mu_n(A):=\frac{1}{h_n + 1/2} \lambda (\{x \in \Gamma', (x, i) \in A\}).$$
+
+Преобразование $T_n$ сохраняет меру $\mu_n$, а отображение $\psi_n$ устанавливает соответствие между $\mu_n$ и $\mu_{n+1}$. Таким образом, все динамические системы $(X_n, T_n, \mu_n)$ изоморфны.
+
+Для каждого $ 0 \le i \le h_{n-1}$ определим множество
+$E_{n,i} := \{(x, i) : x \in \Gamma'\} \subset X_n$. Имеем $E_{n,i} = T^i_n E_{n,0}$. Следовательно, последовательность
+ $$\{E_{n,0},\ldots,E_{n,h_n-1}\}$$
+является башней Рохлина высоты $h_n$ для преобразования $T_n$. Кроме того, для любых $n \ge 0$ и $0 \le i \le h_n-1$ верно 
+\begin{equation}\label{eq:embedding}
+(En,i) = E_{n+1,i} \sqcup E_{n+1,h_n+i} \sqcup E_{n+1,2h_n+i+1}.
+\end{equation}
+Зафиксируем $n_0$. Применяя композицию изоморфизмов $(\psi_n)$, можно вложить все эти башни Рохлина в пространство $X_{n_0}$. 
+
+Формула \cref{embedding} показывает, что эти башни вкладываются таким же образом, как башни для автоморфизма Шакона. Если $p=3$, описанная процедура буквально задаёт классический автоморфизм Шакона: $(X_{n_0} , \mu_{n_0} , T_{n0})$ изофорфно $(X,\mu,T)$. Для любого $p > 3$ строится похожая динамическая система, которую будем называть \emph{обобщённым автоморфизмом Шакона}. В данной работе мы исследуем свойства обощённого автоморфизма Шакона и сравним его свойства с классическим случаем.
+
+
+\chapter{Моделирование данных и статистик}
+
+Покажем на экспериментальных примерах, что статистика $\hat{a}$ имеет основания быть состоятельной и асимпотически нормальной. Для этого расмотрим следующие примеры распределений:
+\begin{enumerate}
+  \item $X_l \sim \mathcal{N}(10, 1)$, параметр сдвига $a = 10$ (рис. \textit{fig:normshift}).
+  \item $X_l \sim Exp(1)$ с параметром сдвига $a = 5$ (рис. \textit{fig:expshift}).
+\end{enumerate}
+В ходе каждого эксперимента, сгенерируем 1000 выборок размера $n = 1000000$, зададим величину $1 \le k_n \le 1000 = \sqrt{n}$, и рассмотрим графики поведения среднего значения статистики $\hat{a}_{\max}$ в зависимости от $k$, гистограммы поведения статистики при $k = 1000$.
+
+%\begin{figure}[!h]
+%    \subfloat[Гистограмма]{\includegraphics[width=0.5\textwidth]{./norm_hist_shift.eps}}
+%    \subfloat[Значение $\hat{a}_{\max}$]{\includegraphics[width=0.5\textwidth]{./norm_mean_shift.eps}}\\
+%    \caption{\small Данные по выборке из нормального распределения, параметр сдвига $a = 10$}
+%    \label{fig:norm_shift}
+%\end{figure}
+
+%\begin{figure}[!h]
+ %   \subfloat[Гистограмма]{\includegraphics[width=0.5\textwidth]{./exp_hist_shift.eps}}
+%    \subfloat[Значение $\hat{a}_{\max}$]{\includegraphics[width=0.5\textwidth]{./exp_mean_shift.eps}}\\
+%    \caption{\small Данные по выборке из экспоненциального распределения, параметр сдвига $a = 5$}
+%    \label{fig:exp_shift}
+%\end{figure}
+
+
+Из представленных графиков видно, что в рассмотренных распределениях гистограмма похожа на график плотности нормального распределения, а среднее значение сходится к истинному значению параметра, поэтому статистика $\hat{a}_{\max}$ может быть подвергнута дальнейшему исследованию.
+
+
+
+Аналогично предыдущему случаю, построим графики и гистограммы для следующих распределений:
+
+\begin{enumerate}
+  \item $X_l \sim \mathcal{N}(5, 25)$, параметр масштаба $b = 5$,
+  \item $X_l \sim Exp(10)$ с параметром масштаба $b = 10$,
+  \item $X_l \sim Pareto(1.2)$, параметр масштаба $b = 10$.
+\end{enumerate}
+
+
+%\begin{figure}[!h]
+%    \subfloat[Гистограмма]{\includegraphics[width=0.5\textwidth]{./norm_hist_scale.eps}}
+%    \subfloat[Значение $\hat{b}_{\max}$]{\includegraphics[width=0.5\textwidth]{./norm_mean_scale.eps}}\\
+%    \caption{\small Данные по выборке из нормального распределения, параметр $b = 5$}
+%    \label{fig:norm_scale}
+%\end{figure}
+
+%\begin{figure}[!h]
+%    \subfloat[Гистограмма]{\includegraphics[width=0.5\textwidth]{./exp_hist_scale.eps}}
+%    \subfloat[Значение $\hat{b}_{\max}$]{\includegraphics[width=0.5\textwidth]{./exp_mean_scale.eps}}\\
+%    \caption{\small Данные по выборке из экспоненциального распределения, параметр $b = 10$}
+%    \label{fig:norm_scale}
+%\end{figure}
+
+
+%\begin{figure}[!h]
+%    \subfloat[Гистограмма]{\includegraphics[width=0.5\textwidth]{./pareto_hist.eps}}
+%    \subfloat[Значение $\hat{b}_{\max}$]{\includegraphics[width=0.5\textwidth]{./pareto_mean.eps}}\\
+%    \caption{\small Данные по выборке из распределения Парето, параметр $b = 10$}
+%    \label{fig:pareto_scale}
+%\end{figure}
+
+
+Как и в предыдущем случае, гистограммы оценок параметра масштаба для $k = 1000$ похожи на гистограммы плотности нормального распределения.
+
+
+
+\begin{thebibliography}{9}
+\bibitem{dehaan}
+  L. de Haan, A. Ferreira.
+  Extreme Value Theory: An Introduction.
+  Springer,
+  2006.
+  417 p.
+
+\bibitem{lidbetter}
+  М. Лидбеттер, Г. Линдгрен, Х. Ростен. Экстремумы случайных последовательностей и процессов. М.: Мир, 1989. 392 с.
+  
+  \bibitem{rodionov}
+  И. В. Родионов. Статистический анализ и проверка гипотез о распределении экстремумов временного ряда. Кандидатская диссертация, МГУ им. М. В. Ломоносова. 2014.
+  
+
+\end{thebibliography}
+
+
+\end{document}
