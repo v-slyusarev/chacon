@@ -36,15 +36,16 @@
 \newtheorem{remark}{\indent Замечание}
 \newtheorem{definition}{\indent Определение}
 \newtheorem{proposition}{\indent Утверждение}
-\newtheorem*{example}{\indent Пример}
-\newtheorem*{notation}{\indent Обозначение}
+\newtheorem{example}{\indent Пример}
+\newtheorem{notation}{\indent Обозначение}
 
 \crefname{lemma}{л.}{л.}
 \crefname{theorem}{теор.}{теор.}
 \crefname{corollary}{след.}{след.}
 \crefname{definition}{опр.}{опр.}
-\crefname{proposition}{опр.}{опр.}
+\crefname{proposition}{утв.}{утв.}
 \crefname{example}{прим.}{прим.}
+\crefname{notation}{обозн.}{обозн.}
 
 
 \newcommand{\order}[2]{#1_{(#2)}}
@@ -80,6 +81,14 @@
   \renewcommand{\contentsname}%
     {Оглавление}%
 }
+
+\titleformat{\chapter}[display]
+{\normalfont\bfseries\center}
+{Глава \thechapter. }{0em}{}
+
+\titleformat{\section}[block]
+{\normalfont\bfseries\center}
+{\thesection. }{0em}{}
 
 \begin{document}
 \begin{center}
@@ -201,6 +210,16 @@ $$\Gamma' := \Gamma \setminus \{(p-1,p-1,\ldots)\},$$
 \begin{remark}
 В определнии этих функционалов вычеты из $\mathbb{Z}_p$ естественным образом отождествляются с целыми числами. Таким образом, в определении $\phi^{(m)}(x)$ сложение осуществляется в множестве целых чисел, а не в группе вычетов.
 \end{remark}
+
+\begin{notation}
+Пусть $n \ge 0$. Будем обозначать $\Delta_n := \sum\limits_{k=0}^{n}k = \frac{n(n+1)}{2}$. Положим также $\Delta_{-1} = 0$.
+\end{notation}
+
+\begin{example}
+Пусть $x = (x_0, x_1, \ldots) \in \Gamma'$ и $0 \le x_0 < p-1$. Если $0 < m \le p-1-x_0$, то $$\phi^{(m)}(x) = x_0 + (x_0 + 1) + \ldots + (x_0 + m - 1) = mx_0 + \Delta_{m-1}$$
+Отметим, что при $m=0$ конечная формула также верна.
+\end{example}
+
 Заметим, что $\phi^{(m)}(x)$ является случайной величиной относительно пространства $(\Gamma, 2^\Gamma, \lambda)$, принимающей значения в $\mathbb{Z}$. Одним из основных объектов, рассматриваемых в настоящей работе, является эта случайная величина и её распределение $\pi_m$.
 \begin{definition}\label{pi_m}
 Пусть $j \in \mathbb{Z}$, тогда $\pi_m(j)=\lambda(\phi^{m}(x)=j)$ --- функция вероятности случайной величины $\phi^{(m)}$.
@@ -277,7 +296,7 @@ $$
 \begin{definition}\label{palindromic}
 Пусть $\psi$ --- функционал, заданный функцией $\omega$, обозначим $\omega_\star = \min\limits_x \omega(x),\ \omega^\star = \max\limits_x \omega(x), \delta=\omega^\star - \omega_\star$. Будем говорить, что  $\psi$  \emph{обладает палиндромическим свойством} тогда и только тогда, когда
 $$
-\forall j,\ 0 \le j \le m\delta:   \pi_m(m\omega_\star + j)=\pi_m(m\omega^\star-j)
+\forall j,\ 0 \le j \le m\delta:   \pi_m[\psi](m\omega_\star + j)=\pi_m[\psi](m\omega^\star-j)
 $$
 \end{definition}
 
@@ -362,15 +381,15 @@ $\{\psi(S^j x)\}_{j \ge 0}$ состоит из блоков $\omega(0),\omega(1
 
 Перейдём к доказательству теоремы.
 \begin{proof}
-В \cref{psi} подставим $\psi_\star = 0, \psi^\star = \delta = \zeta$. Достаточно показать, что  \[\forall j,\ 0 \le j \le m\zeta: \pi_m(j) = \pi_m(m \zeta - j).\]
+В \cref{psi} подставим $\psi_\star = 0, \psi^\star = \delta = \zeta$. Достаточно показать, что  \[\forall j,\ 0 \le j \le m\zeta: \pi_m[\psi](j) = \pi_m[\psi](m \zeta - j).\]
 Действительно,
-$$\pi_m(m \zeta - j) = \lambda(\psi^{(m)}(x)=m\zeta-j)=$$ 
+$$\pi_m[\psi](m \zeta - j) = \lambda(\psi^{(m)}(x)=m\zeta-j)=$$ 
 $$=\sum\limits_{(\psi_1, \ldots, \psi_m)} \lambda\big(\psi(x)=\psi_1, \psi^{(2)}(x) = \psi_2, \ldots, \psi^{(m)}(x)=\psi_m\big) \mathbb{I} (\psi_1 + \ldots + \psi_k = m\zeta - j) =$$
 $$ = \sum\limits_{(\psi_1, \ldots, \psi_m)} \lambda\big(\psi(x)=\psi_1, \psi^{(2)}(x) = \psi_2, \ldots, \psi^{(m)}(x)=\psi_m\big) \mathbb{I} \big((\zeta-\psi_1) + \ldots + (\zeta-\psi_m) = j\big)$$
 По предыдущей лемме это равно
 $$\sum\limits_{(\psi_1, \ldots, \psi_m)} \lambda\big(\psi(x)=\zeta-\psi_m, \psi^{(2)}(x) = \zeta-\psi_{m-1}, \ldots, \psi^{(m)}(x)=\zeta-\psi_1\big) \mathbb{I} \big(\sum\limits_k (\zeta-\psi_k) = j\big) = \left< \psi_k := \zeta - \psi_k \right> =$$
 $$ =\sum\limits_{(\psi_1, \ldots, \psi_m)} \lambda(\psi(x)=\psi_1, \psi^{(2)}(x) = \psi_2, \ldots, \psi^{(m)}(x)=\psi_m) \mathbb{I} (\psi_1 + \ldots + \psi_m = j) =  \lambda(\psi^{(m)}(x)=j)= $$
-$$ =\pi_m(j)$$
+$$ =\pi_m[\psi](j)$$
 \end{proof}
 
 Результат этой теоремы может быть обобщён на более широкий класс функций. Фактически, мы сможем отказаться от ограничения на область значений функции $\omega$ в \cref{antipalindromic}.
@@ -379,7 +398,7 @@ $$ =\pi_m(j)$$
 Коэффициенты характеристических полиномов обобщённого автоморфизма Шакона симметричны для любого $p \ge 3$ .
 \end{corollary}
 \begin{proof}
-Отметим, что в соответствии с \cref{poly} коэффициентами полинома $P_m^p(t)$ являются значения $\pi_m(t)$. В силу \cref{palindromic} требование симметрии коэффициентов --- в точности то же самое, что палиндромическое свойство для $\phi$. Выше мы показали, что $\phi$ удовлетворяет условию \cref{palindromic_theorem}, и следовательно обладает палиндромическим свойством.
+Отметим, что в соответствии с \cref{poly} коэффициентами полинома $P_m^p(t)$ являются значения $\pi_m(t)$. В силу \cref{palindromic} требование симметрии коэффициентов --- в точности то же самое, что палиндромическое свойство для $\phi$. В \cref{classic_omega} показали, что $\phi$ удовлетворяет условию \cref{palindromic_theorem}, и, следовательно, обладает палиндромическим свойством.
 \end{proof}
 
 Отдельный познавательный интерес представляет описание как можно более широкого класса функций, порождающих функционалы с палиндромическим свойством. Докажем несколько утверждений, обобщающих результат теоремы.
@@ -411,8 +430,11 @@ $$\psi'(x) = \begin{cases}
 \begin{corollary}{О сохранении палиндромического свойства}
 Пусть $\psi$ обладает палиндромическим свойством, и пусть функционал $\psi'$ таков, что для любого $m \in \mathbb{N}$ существует биекция $$i^{(m)}: \mathrm{Ran}\ \psi'^{(m)} \rightarrow \mathrm {Ran}\ \psi^{(m)}.$$ Тогда $\psi'$ также обладает палиндромическим свойством.
 \end{corollary}
-Доказательство в точности повторяет рассуждения из предыдущей леммы. Важно, что рассматриваемая здесь биекция --- не просто соответствие значений $omega$. Взаимная однозначность должна сохраняться для всех порядков $m$ функционала $\phi$, и это требование нельзя ослабить. В частности, преобразование $\omega(j) \mapsto \omega^2(j)$ является биекцией, но не сохраняет палиндромического свойства для задаваемых функционалов.
+Доказательство в точности повторяет рассуждения из предыдущей леммы. Важно, что рассматриваемая здесь биекция --- не просто соответствие значений $\omega$. Взаимная однозначность должна сохраняться для всех порядков $m$ функционала $\phi$, и это требование нельзя ослабить. В частности, преобразование $\omega(j) \mapsto \omega^2(j)$ является биекцией, но не сохраняет палиндромического свойства для задаваемых функционалов.
+
 \chapter{Рекуррентные соотношения для характеристических полиномов}
+
+
 
 \chapter{Моделирование данных и статистик}
 
