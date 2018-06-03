@@ -47,7 +47,7 @@
 \crefname{example}{прим.}{прим.}
 \crefname{notation}{обозн.}{обозн.}
 
-
+\crefname{theorem}{Теорема}{Теорема}
 \newcommand{\order}[2]{#1_{(#2)}}
 
 \newcommand{\T}{^{\text{\tiny\sffamily\upshape\mdseries T}}}
@@ -72,6 +72,7 @@
 \bibliographystyle{unsrt}
 
 \addto\captionsenglish{\renewcommand{\figurename}{Рисунок}}
+\captionsetup[figure]{labelfont=footnotesize,textfont=footnotesize}
 
 \addto\captionsenglish{\renewcommand{\proofname}{Доказательство}}
 
@@ -89,6 +90,36 @@
 \titleformat{\section}[block]
 {\normalfont\bfseries\center}
 {\thesection. }{0em}{}
+
+\makeatletter
+\newcommand*{\indep}{%
+  \mathbin{%
+    \mathpalette{\@indep}{}%
+  }%
+}
+\newcommand*{\@indep}[2]{%
+  % #1: math style
+  % #2: empty or \not
+  \sbox0{$#1\perp\m@th$}%        box 0 contains \perp symbol
+  \sbox2{$#1=$}%                 box 2 for the height of =
+  \sbox4{$#1\vcenter{}$}%        box 4 for the height of the math axis
+  \rlap{\copy0}%                 first \perp
+  \dimen@=\dimexpr\ht2-\ht4-.2pt\relax
+      % The equals symbol is centered around the math axis.
+      % The following equations are used to calculate the
+      % right shift of the second \perp:
+      % [1] ht(equals) - ht(math_axis) = line_width + 0.5 gap
+      % [2] right_shift(second_perp) = line_width + gap
+      % The line width is approximated by the default line width of 0.4pt
+  \kern\dimen@
+  {#2}%
+      % {\not} in case of \nindep;
+      % the braces convert the relational symbol \not to an ordinary
+      % math object without additional horizontal spacing.
+  \kern\dimen@
+  \copy0 %                       second \perp
+} 
+\newcommand{\SymPol}[2]{\overset{o}{P}{}^{#1}_{#2}}
 
 \begin{document}
 \begin{center}
@@ -224,6 +255,19 @@ $$\Gamma' := \Gamma \setminus \{(p-1,p-1,\ldots)\},$$
 \begin{definition}\label{pi_m}
 Пусть $j \in \mathbb{Z}$, тогда $\pi_m(j)=\lambda(\phi^{m}(x)=j)$ --- функция вероятности случайной величины $\phi^{(m)}$.
 \end{definition}
+\begin{example}\label{pi_example}
+Легко видеть, что:
+\begin{itemize}
+\item $\pi_0(j) = \begin{cases}
+1, & j = 0\\
+0, & \text{иначе}
+\end{cases}$
+\item $\pi_1(j)=\begin{cases}
+\frac{1}{p-1},& 0 \le j \le p-2 \\
+0, & \text{иначе}
+\end{cases}$
+\end{itemize} 
+\end{example}
 
 При фиксированном $p$ распределения $\pi_m$ порождают семейство характеристических полиномов $P_m^p(t)$.
 
@@ -232,6 +276,16 @@ $$\Gamma' := \Gamma \setminus \{(p-1,p-1,\ldots)\},$$
 \end{definition}
 
 Данные полиномы, рассматриваемые как семейство с параметром $m$ при фиксированном $p$, являются центральным предметом изучения в настоящей работе.
+
+\begin{example}\label{poly_example}
+Мы можем сразу вычислить первые два полинома для каждого $p$, пользуясь определением и результатами \cref{pi_example}:
+\begin{equation}\label{eq:p_0}
+P_0^p(t) = 1
+\end{equation}
+\begin{equation}\label{eq:p_1}
+P_1^p(t) = \frac{1}{p-1} \sum\limits_{j=0}^{p-2} t^j
+\end{equation}
+\end{example}
 
 \section{Обобщённый автоморфизм Шакона}
 
@@ -247,7 +301,7 @@ $$X_n:=\{(x,i): x \in \Gamma',\ 0 \le i \le h_{n-1} + \phi(x)\}$$
 Рассмотрим преобразование $T_n$ пространства $X_n$, определяемое по правилу
 $$T_n(x, i) := \begin{cases}
 (x,i+1), & \text{ если } i+1 \le h_n - 1 + \phi(x) \\
-(Sx,0), & \text{ если } i=h_n-1+\phi(x). \end{cases}$$
+(Sx,0), & \text{ если } i=h_n-1+\phi(x) \end{cases}$$
 
 Также определим биективное отображение $\psi_n : X_n \mapsto X_n+1$:
 $$\psi_n(x,i):=(\sigma x, x_0 h_n + i + \mathbb{1}\{x_0=p-1\})$$
@@ -257,7 +311,7 @@ $T_{n+1}$.
 
 Введём вероятностную меру $\mu_n$ на пространстве $X_n$: для фиксированного $i$ и подмножества
 $A \subset \{(x, i), x\in\Gamma' \}$ положим
-$$\mu_n(A):=\frac{1}{h_n + \Delta_{p-2}/2} \lambda (\{x \in \Gamma', (x, i) \in A\}).$$
+$$\mu_n(A):=\frac{1}{h_n + \Delta_{p-2}/2} \lambda (\{x \in \Gamma', (x, i) \in A\})$$
 % WRONG, NOT 1/2 BUT MEAN OMEGA
 
 Преобразование $T_n$ сохраняет меру $\mu_n$, а отображение $\psi_n$ устанавливает соответствие между $\mu_n$ и $\mu_{n+1}$. Таким образом, все динамические системы $(X_n, T_n, \mu_n)$ изоморфны.
@@ -267,7 +321,7 @@ $E_{n,i} := \{(x, i) : x \in \Gamma'\} \subset X_n$. Имеем $E_{n,i} = T^i_n
  $$\{E_{n,0},\ldots,E_{n,h_n-1}\}$$
 называется башней Рохлина высоты $h_n$ для преобразования $T_n$ \cite{rokhlin_towers}. Кроме того, для любых $n \ge 0$ и $0 \le i \le h_n-1$ верно 
 \begin{equation}\label{eq:embedding}
-(En,i) = E_{n+1,i} \sqcup E_{n+1,h_n+i} \sqcup E_{n+1,2h_n+i+1}.
+(En,i) = E_{n+1,i} \sqcup E_{n+1,h_n+i} \sqcup E_{n+1,2h_n+i+1}
 \end{equation}
 
 Таким образом, мы построили цепочку вложенных башен, которая определяет сохраняющее меру преобразование $T$. Если $p=3$, описанная процедура буквально задаёт классический автоморфизм Шакона: этот случай разобран в работе \cite{weaklimits}. Для любого $p > 3$ получается похожее преобразование, которое будем называть \emph{обобщённым автоморфизмом Шакона}. В данной работе мы исследуем свойства обощённого автоморфизма Шакона и сравним его свойства с классическим случаем.
@@ -328,7 +382,7 @@ $$
 \begin{figure}[!h]
     \subfloat[$\omega(j)=j$]{\includegraphics[width=0.5\linewidth]{linear}}
     \subfloat[$\omega(x)=((\frac{x+1}{p}) + 1)/2$]{\includegraphics[width=0.5\linewidth]{legendre}}\\
-    \caption{\small Примеры антипалиндромических функций для $p=19$}
+    \caption{\footnotesize{Примеры антипалиндромических функций для $p=19$}}
 \label{fig:antipalindromic}
 \end{figure}
 
@@ -361,8 +415,8 @@ $\{\psi(S^j x)\}_{j \ge 0}$ состоит из блоков $\omega(0),\omega(1
 
 \begin{figure}[!h]
 {\includegraphics[width=\linewidth]{recursion}}
-    \caption{\small Пример построения последовательности $\{\psi(S^j x)\}$ для  $p=3$ и $x=0$ \cite{weaklimits}}
-\label{fig:antipalindromic}
+    \caption{\footnotesize{Пример построения последовательности $\{\psi(S^j x)\}$ для  $p=3$ и $x=0$ \cite{weaklimits}}}
+\label{fig:psi_construction}
 \end{figure}
 
 \end{enumerate}
@@ -427,14 +481,12 @@ $$\psi'(x) = \begin{cases}
 
 Отметим, что при доказательстве этого следствия мы не пользовались свойствами аффинного преобразования как такового. Фактически, оно является частным случаем более общего факта:
 \begin{corollary}{О сохранении палиндромического свойства}
-Пусть $\psi$ обладает палиндромическим свойством, и пусть функционал $\psi'$ таков, что для любого $m \in \mathbb{N}$ существует биекция $$i^{(m)}: \mathrm{Ran}\ \psi'^{(m)} \rightarrow \mathrm {Ran}\ \psi^{(m)}.$$ Тогда $\psi'$ также обладает палиндромическим свойством.
+Пусть $\psi$ обладает палиндромическим свойством, и пусть функционал $\psi'$ таков, что для любого $m \in \mathbb{N}$ существует биекция $$i^{(m)}: \mathrm{Ran}\ \psi'^{(m)} \rightarrow \mathrm {Ran}\ \psi^{(m)}$$ Тогда $\psi'$ также обладает палиндромическим свойством.
 \end{corollary}
 Доказательство в точности повторяет рассуждения из предыдущей леммы. Важно, что рассматриваемая здесь биекция --- не просто соответствие значений $\omega$. Взаимная однозначность должна сохраняться для всех порядков $m$ функционала $\phi$, и это требование нельзя ослабить. В частности, преобразование $\omega(j) \mapsto \omega^2(j)$ является биекцией, но не сохраняет палиндромического свойства для задаваемых функционалов.
-
 \chapter{Рекуррентные соотношения для характеристических полиномов}
-
-В этой главе мы выведем рекуррентные соотношения, которые позволят построить всё семейство характеристических полиномов алгебраически.
-
+В этой главе мы исследуем рекуррентные соотношения, которые позволят построить всё семейство характеристических полиномов алгебраически. Первый раздел посвящён выводу основных рекуррентных формул. Во втором разделе мы представим алгоритм вычисления характеристических полиномов и обсудим результаты.
+\section{Вывод рекуррентных соотношений}
 Для начала докажем простую лемму.
 
 \begin{lemma}\label{simple_case} $P_{pm}^p(t)=t^{m\Delta_{p-2}}P_m^p(t)$
@@ -452,6 +504,110 @@ $$P_{pm}^p(t) = \mathbb{E}_\lambda\left[ t^{\phi^{(pm)}(x)}\right] =
 t^{m\Delta_{p-2}} \mathbb{E}_\lambda \left[ t^{\phi^{(m)} (\sigma x)}  \right] = 
 t^{m\Delta_{p-2} }P_m(t)$$
 \end{proof}
+
+Данная лемма иллюстрирует метод, который будет использован для получения общего рекуррентного соотношения. Его вывод требует более глубокого комбинаторного рассмотрения сумм $\phi^{(pm+k)}(x)$, однако ход рассуждений останется в точности таким же.
+\begin{lemma} \label{phiLemma}
+Пусть $0 < k < p$,  $x=(x_0,x_1,\ldots) \in \Gamma'$.
+
+$\phi^{(pm+k)}(x)= 
+\begin{cases}
+k x_0 + \Delta_{k-1} + m\Delta_{p-2} + \phi^{(m)}(\sigma x), & x_0 < p-k\\
+(p-1-x_0)(x_0) + \Delta_{p-2-x_0} + \Delta_{x_0+k-p-1}+m\Delta_{p-2}+\phi^{(m+1)}(\sigma x), & x_0 \ge p-k
+\end{cases}$
+\end{lemma}
+\begin{proof}
+По определению $\phi^(k)$ выпишем $$\phi^{(pm+k)}(x) = \phi(x) + \phi(Sx) + \ldots + \phi(S^{k-1}x) + \phi^{(pm)}(S^k x)= \phi^{(k)}(x) + \phi^{(pm)}(S^k x)$$
+По предыдущей лемме верно равенство $\phi^{(pm+k)}(x) =  \phi^{(k)}(x) + m\Delta_{p-2} + \phi^{(m)}(\sigma S^k x)$.
+Пользуясь определением функционала $\phi(x)$, рассмотрим два случая, возникающих при вычислении $\phi^{(pm+k)}(x)$:
+\begin{itemize}
+\item В простом случае $x_0 < p-k $ каждое слагаемое в $\phi^{(k)}(x)$ вычисляется непосредственно по первой координате: $\phi^{(k)}(x) = k x_0 + \Delta_{k-1}$. Кроме того, имеет место равенство $\sigma S^k x = \sigma x$: так как $S^k$ действует только на первую координату $x$, его действие не влияет на $\sigma S^k x$. Итого, $$\phi^{(pm+k)}(x)=k x_0 + \Delta_{k-1}+m\Delta_{p-2}+\phi^{(m)}(\sigma x)$$
+\item Пусть теперь $x_0 \ge p-k $, тогда одно из слагаемых в $\phi^{(k)}(x)$ вычисляется рекурсивно: для некоторого $j \in [0,k-1]$ элемент $S^j x$ имеет первую координату, равную $p-1$, и таким образом $\phi(S^j x) = \phi(\sigma x)$. Следовательно, значение $\phi^{(k)}(x)$ не может быть вычислено непосредственно, как в первом случае. Мы вычислим его, разделив сумму на две части. Сумма по начальному отрезку $\phi^{(p-1-x_0)}(x)$ может быть вычислена непосредственно и равна $(p-1-x_0)x_0 + \Delta_{p-2-x_0}$. Рассмотрим оставшуюся часть суммы $Z := \phi(S^j x) + \phi(S^{j+1}x) + \ldots + \phi(S^{k-1})$. По построению первая координата в $S^j x$ равна $p-1$, так что первые координаты следующих слагаемых $S^{j+1}x, S^{j+2}x, \ldots, S^{k-1}$ --- это числа $0,1,\ldots, x_0+k-p-1$. По определению $\phi(S^j x) = \phi(\sigma x)$, последующие слагаемые вычисляются непосредственно. Итого, $$Z = \phi(\sigma x) + 0 + 1 + \ldots + (x_0+k-p-1) =  \phi(\sigma x) + \Delta_{x_0+k-p-1}$$ Собирая полученные результаты, имеем $\phi^{(k)}(x)=\omega^{(p-1-x_0)}(x) + \Delta_{x_0+k-p-1}+\phi(\sigma x)$. Используя равенство $\phi^{(m)}(\sigma S^k x) = \phi^{(m)}(S\sigma x)  = \phi^{(m+1)}(\sigma x) - \phi(\sigma x)$, получим: 
+$$\phi^{(pm+k)}(x) =  \phi^{(k)}(x) + m\Delta_{p-2} + \phi^{(m)}(\sigma S^k x) = $$ $$ = \omega^{(p-1-x_0)}(x) + \Delta_{x_0+k-p-1}+\phi(\sigma x)+ m\Delta_{p-2} + \phi^{(m+1)}(\sigma x) - \phi(\sigma x) = $$ $$ = (p-1-x_0)(x_0) + \Delta_{p-2-x_0} + \Delta_{x_0+k-p-1}+m\Delta_{p-2}+\phi^{(m+1)}(\sigma x)$$
+\end{itemize}
+\end{proof}
+
+\begin{lemma} \label{complex_case}
+Пусть $0 < k < p$.
+
+$$P_{pm+k}^p(t)  =   \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{jk} P_m^p(t) 
+      + \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-2}}\sum\limits_{j=0}^{k-1} t^{j(p-k)} P_{m+1}^p(t) $$
+\end{lemma}
+\begin{proof}
+Доказательство заключается в разложении полного математического ожидания по условным. Ясно, что события $\{x_0 < p-k\}$ и $\{x_0 \ge p-k\}$ образуют полную систему событий. Их вероятности могут быть непосредственно вычислены по мере Хаара.
+$$ P_{pm+k}(t)= \mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}\right] = $$
+$$= \mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 < p-k \right]\lambda(x_0<p-k) + \mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)} | x_0 \ge p-k \right]\lambda( x_0 \ge p-k )$$
+\begin{equation}\label{eq:totalExp}= \mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 < p-k \right]\frac{p-k}{p} + \mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)} | x_0 \ge p-k \right]\frac{k}{p}
+\end{equation}
+Условные математические ожидания, в свою очередь, могут быть вычислены с использованием результата предыдущей леммы. Заметим, что отдельные координаты $x$ как случайные величины независимы в совокупности, так что $x_0 \indep (x_1, x_2,\ldots)$ и, значит, $x_0 \indep \sigma x$. Вычислим первое условное математическое ожидание.
+$$\mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 < p-k \right] = 
+\mathbb{E}_\lambda\left[ t^{ k x_0 + \Delta_{k-1} + m\Delta_{p-2} + \phi^{(m)}(\sigma x) }| x_0 < p-k \right] = $$ 
+$$ =t^{m\Delta_{p-2}}
+\mathbb{E}_\lambda\left[ t^{ k x_0 + \Delta_{k-1}} | x_0 < p-k \right]
+ \mathbb{E}_\lambda\left[ t^{\phi^{(m)}(\sigma x) } \right]
+$$
+Случайные величины $\sigma x$ and $x$ распределены одинаково, так что
+$\mathbb{E}_\lambda\left[ t^{\phi^{(m)}(\sigma x) } \right] = \mathbb{E}_\lambda\left[ t^{\phi^{(m)}(x) }\right] = P_m^p(t)$. Остаётся вычислить $\mathbb{E}_\lambda\left[ t^{ k x_0 + \Delta_{k-1}} | x_0 < p-k \right]$:
+$$ \mathbb{E}_\lambda\left[ t^{ k x_0 + \Delta_{k-1}} | x_0 < p-k \right] =
+ \frac{1}{p-k}\sum\limits_{j=0}^{p-k-1} t^{ k j + \Delta_{k-1}} = 
+ \frac{1}{p-k} t^{\Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{kj}$$
+ Итак, \begin{equation}\label{eq:firstCondExp}\mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 < p-k \right] =
+  \frac{1}{p-k} t^{m\Delta_{p-2} + \Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{jk} P_m^p(t)
+   \end{equation}
+Похожим образом вычислим второе условное матожидание. 
+ $$\mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 \ge p-k \right] = 
+ \mathbb{E}_\lambda\left[ t^{(p-1-x_0)(x_0) + \Delta_{p-2-x_0} + \Delta_{x_0+k-p-1}+m\Delta_{p-2}+\phi^{(m+1)}(\sigma x)}| x_0 \ge p-k \right] = $$
+ $$ =t^{m\Delta_{p-2}}
+ \mathbb{E}_\lambda\left[ t^{(p-1-x_0)(x_0) + \Delta_{p-2-x_0} + \Delta_{x_0+k-p-1}} | x_0 \ge p-k \right] 
+ \mathbb{E}_\lambda\left[ t^{\phi^{(m+1)}(\sigma x) } \right] = $$
+  $$ =t^{m\Delta_{p-2}}
+    P_{m+1}^p(t)
+ \mathbb{E}_\lambda\left[ t^{(p-1-x_0)(x_0) + \Delta_{p-2-x_0} + \Delta_{x_0+k-p-1}} | x_0 \ge p-k \right] = $$
+  $$ = \frac{1}{k} t^{m\Delta_{p-2}} P_{m+1}^p(t)
+  \sum\limits_{j=p-k}^{p-1} t^{  (p-1-j) j + \Delta_{p-2-j} + \Delta_{j+k-p-1}}$$
+
+Заменим индекс суммирования $j$ на $q = p-1-j$ и упростим выражение в показателе:
+$$  (p-1-j) j + \Delta_{p-2-j} + \Delta_{j+k-p-1} =
+    q(p-1-q) + \Delta_{q-1} + \Delta_{k-2-q}=
+   q(p-k)+\Delta_{k-2} 
+$$   
+В итоге имеем: 
+\begin{equation}\label{eq:secondCondExp}
+\mathbb{E}_\lambda\left[ t^{\phi^{(pm+k)}(x)}| x_0 \ge p-k \right] 
+ =  \frac{1}{k} t^{m\Delta_{p-2} + \Delta_{k-2}} P_{m+1}^p(t)
+  \sum\limits_{q=0}^{k-1} t^{q(p-k)}
+  \end{equation}
+Подставим (\ref{eq:firstCondExp}) и (\ref{eq:secondCondExp}) в (\ref{eq:totalExp}) и получим рекуррентное соотношение:
+$$P_{pm+k}(t)  =   \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{jk} P_m^p(t) 
+      + \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-2}}\sum\limits_{j=0}^{k-1} t^{j(p-k)} P_{m+1}^p(t) $$
+\end{proof}
+\section{Вычисление характеристических полиномов}
+Результаты \cref{simple_case} и \cref{complex_case} из предыдущего раздела объединим в теорему.
+\begin{theorem}[Основные рекуррентные уравнения] 
+\begin{align}
+\label{P_pm} P_{pm}^p(t) & =  t^{m\Delta_{p-2}}\ P_m^p(t) \\
+\label{P_pm+k} P_{pm+k}^p(t) & =  \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-1}}\sum\limits_{j=0}^{p-k-1} t^{jk} P_m^p(t)  + \frac{1}{p} t^{m\Delta_{p-2} + \Delta_{k-2}}\sum\limits_{j=0}^{k-1} t^{j(p-k)} P_{m+1}^p(t), \ 0 < k < p
+\end{align}
+\end{theorem}
+Для вычисления характеристических полиномов по этим соотношениям необходимы начальные условия. В Главе 1 мы уже получили первые два полинома $P_0^p(t)$ (\ref{eq:p_0}) и $P_1^p(t)$ (\ref{eq:p_1}). Покажем, что их достаточно для восстановления всего семейства. 
+
+Действительно, зная $P_0^p(t)$ и $P_1^p(t)$, мы можем построить $P_2^p(t),\ \ldots
+ ,\  P_{p-1}^p(t)$, воспользовавшись (\ref{P_pm+k}). Таким образом, нам известны полиномы $P_0^p(t)$ для всех $m < p$.
+ 
+Отметим, что из полиномов для $m<p^k$ можно получить все полиномы для $p^k \le m < p^{k+1}$. Действительно, зафиксируем такое $m$. Выполним деление с остатком: $m = qp + r, \ p^{k-1} \le q < p^k,\ 0 \le r < p$. Если $r=0$, получаем нужный нам полином из уже известного $P_q^p(t)$ по формуле (\ref{P_pm}). Если $r \ne 0$, воспользуемся формулой (\ref{P_pm+k}), подставив в неё известные нам $P_q^p(t)$ и $P_{q+1}^p(t)$.
+
+Таким образом, индукцией по степеням $p$ можно показать, что описанная процедура позволяет построить всё семейство полиномов $\{P_m^p(t)\}_m \ge 0$, зная только два начальных условия (\ref{eq:p_0}) и  (\ref{eq:p_1}).
+
+В качестве примера выпишем первые несколько полиномов для небольших $p$.
+%TODO
+
+Отметим, что полученные формулы, как и ожидалось, согласуется с описанными в статье \cite{weaklimits} рекуррентными соотношениями для $p=3$. Подставив $p=3$ в (\ref{P_pm}) и (\ref{P_pm+k}) и раскрыв знаки суммирования, легко убедиться, что выполнены соотношения
+\begin{align*}
+P_{3m}^3(t) & =  t^{m}\ P_m^3(t) \\
+P_{3m+1}^p(t) & =  \frac{1}{3} t^m (1 + t) P_m^3(t)  + \frac{1}{3} t^m P_{m+1}^3(t)\\
+P_{3m+2}^p(t) & =  \frac{1}{3} t^m \cdot t\cdot  P_m^3(t)  + \frac{1}{3} t^m (1+t) P_{m+1}^3(t)
+\end{align*}
+
+Отметим ещё одно важное следствие. В статье \cite{weaklimits} доказывалась унимодальность распределения $\pi_m$ при $p=3$. Далее это свойство сыграло значительную роль при доказательстве главного результата о слабых пределах. Однако легко видеть, что в общем случае распределение не унимодально. К примеру, полиномы $P_2^4$, $P_2^5$, $P_2^6$ не обладают унимодальными наборами коэффициентов.
 
 
 
