@@ -1,0 +1,207 @@
+% $Header: /cvsroot/latex-beamer/latex-beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 1.7 2007/01/28 20:48:23 tantau Exp $
+
+\documentclass{beamer}
+%\usefonttheme{proffessionalfonts}
+
+
+% This file is a solution template for:
+
+% - Talk at a conference/colloquium.
+% - Talk length is about 20min.
+% - Style is ornate.
+
+%\usepackage{mathptmx}
+%\usepackage{helvet}
+
+%\usepackage{beamerthemesplit}                                 
+
+%\usepackage{ucs}
+\usepackage[cp1251]{inputenc}                                 
+\usepackage[english,russian]{babel}
+\usepackage[OT1,T2A]{fontenc}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+
+\usepackage{graphicx}
+\usepackage{grffile}
+
+\usepackage{a}
+
+\def\ASet#1{{\mathbb{#1}}}
+\def\conv{\mathbin{*}}
+
+\def\Berns{{\boldsymbol \beta}}
+
+\def\UF{{\mathrm{UF}}}
+
+\def\SIGN#1{{\color{red} #1\/\,}}
+
+\def\Lamp{{\mathscr{L}}}
+
+\definecolor{QuoteColor}{rgb}{0.0,0.0,0.5} 
+\definecolor{PointColor}{rgb}{0.7,0.0,0.0} 
+
+
+
+\mode<presentation>
+{
+	%\usecolortheme{beetle}
+	%\usecolortheme{crane}
+	\usecolortheme{dolphin} % !!!
+	%\usecolortheme{seahorse}
+	%\usecolortheme{fly}
+
+  \usetheme{Szeged}
+  %\usetheme{Warsaw}
+  %\usetheme{boxes} %%%
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+}
+
+
+\usepackage[english]{babel}
+% or whatever
+
+%\usepackage[utf8x]{inputenc}
+% or whatever
+
+%\usepackage{times}
+%\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+
+\usepackage{cmbright}
+
+%\input ParisTitle.tex
+%\input CaenTitle.tex
+%\input ETDS14Title.tex
+\input title.tex
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+\AtBeginSubsection[]
+{
+  %\begin{frame}<beamer>{Outline}
+  %  \tableofcontents[currentsection,currentsubsection]
+  %\end{frame}
+}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+%  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+
+
+% Iceberg 
+
+\def\CAT{{\mathrm{CAT}}}
+\def\ATC{{\mathrm{ATC}}}
+\def\TCA{{\mathrm{TCA}}}
+\def\seppoint{\,{\boldsymbol .}\,}
+\def\CATalphabet{\{{\mathrm C}, {\mathrm A}, {\mathrm T}\}}
+\def\syC{{\mathrm{C}}}
+\def\syA{{\mathrm{A}}}
+\def\syT{{\mathrm{T}}}
+
+\def\gCAT{\includegraphics[width=18mm,height=18mm]{cat_0.eps}}
+\def\gATC{\includegraphics[width=18mm,height=18mm]{cat_120.eps}}
+\def\gTCA{\includegraphics[width=18mm,height=18mm]{cat_240.eps}}
+
+\def\iceberg{{\mathfrak I}}
+\def\ipart{\bar\iceberg}
+\def\ice{\ipart}
+\def\ib{*}
+\def\icebody{\iceberg^\ib}
+
+\def\tow{{\mathfrak T}}
+\def\twp{{\mathfrak T}}
+\def\twpe{{\mathfrak T}^\varepsilon}
+\def\utw{\cup\,\tow}
+
+\def\VisualSIGN#1{{\color{red} #1}}
+\def\SIGN#1{{\em\color{red} #1\/}}
+
+\def\spMult{{\boldsymbol m}}
+\def\Mult{M}
+
+\def\CyR{R^\circ}
+
+\def\term#1{{\large\rm\itshape #1}}
+\def\Comment#1{{\footnotesize #1}}
+
+
+
+
+%=================================================================================================
+% CONTENT 
+
+\input GenChaconPoly.tex
+%\input example.tex
+
+%-------------------------------------------------------------------------------------------------
+\begin{frame}
+
+	\begin{center}
+	{\huge\color{blue} Thank you for attention!}
+	%{\huge\color{blue} Спасибо за внимание!}
+	\end{center}
+
+\end{frame}	
+	
+%\fi
+\end{document}
+
+
+
+
+
+
+
+
+
