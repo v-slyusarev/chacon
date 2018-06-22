@@ -1,0 +1,12 @@
+
+
+According to the palindromic property (\Cref{pal_property}), the coefficients of $t^j$ and $t^{-j}$ in $\SymPol{p}{m}(t)$ are equal. Hence, we may write it in a compact form: $\SymPol{m}{p}(t) = \sum\limits_{j=0}^{D_m^p} \frac{a_m^p(j)}{2} \left(t^{-\frac{j}{2}} + t^\frac{j}{2}\right)$. When the number of terms is odd, the coefficients with odd indexes are zeroes. When the number of terms is even, the coefficients with even indexes are zeroes.
+
+We may rewrite the symmetric form as polynomial of hyperbolic functions. Indeed, let $t = e^z$, then $\SymPol{m}{p}(e^z) = \sum\limits_{j=0}^{D_m^p} \frac{a_m^p(j)}{2} \left(e^{-\frac{jz}{2}} + e^\frac{jz}{2}\right) = \sum\limits_{j=0}^{D_m^p} a_m^p(j) \ch \frac{jz}{2}$.
+
+Then the recurrence equations take the form:
+
+\begin{align}
+    \SymPol{p}{pm}(e^z)&=\SymPol{p}{m}(e^z)\\
+    \SymPol{p}{pm+k}(e^z)&=\frac{1}{p}\left((1-(-1)^{p-k-j})\sum\limits_{j=0}^{p-k-1} \ch\frac{jk}{2}\right)\SymPol{p}{m}(e^z)+\frac{1}{p}\left((1-(-1)^{k-j})\sum\limits_{j=0}^{k-1} \ch\frac{j(p-k)}{2}\right)\SymPol{p}{m+1}(e^z)
+\end{align}

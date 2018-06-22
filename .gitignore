@@ -1,4 +1,4 @@
-# Byte-compiled / optimized / DLL files
+﻿# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
@@ -105,3 +105,16 @@ ENV/
 Articles/
 Untitled*
 Фк
+
+*.png
+
+#tex output
+*.aux
+*.bbl
+*.blg
+*.dvi
+*.out
+*.pdf
+*.synctex.gz
+*.toc
+*.run.xml
